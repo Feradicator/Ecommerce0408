@@ -11,10 +11,6 @@ export const MainCaroselData=[
     },
     {
         image:"https://www.ethnicplus.in/media/mageplaza/bannerslider/banner/image/9/_/9_13.jpg"
-    },
-    
-    {
-        image:"https://www.ethnicplus.in/media/mageplaza/bannerslider/banner/image/1/4/14_crop_top_lehenga_copy_3.jpg"
     }
 
 ]
