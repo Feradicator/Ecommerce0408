@@ -1,5 +1,6 @@
 package com.app.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,14 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class User {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
