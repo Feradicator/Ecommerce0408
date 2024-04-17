@@ -12,6 +12,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
@@ -26,6 +27,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class User {
+	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	private String firstName;
@@ -33,8 +35,7 @@ public class User {
 	private String password;
 	private String email;
 	private String mobie;
-	@OneToMany(mappedBy="u@OneToMany(mappedBy=\"user\",cascade=CascadeType.ALL)\n"
-			+ "	@JsonIgnoreser",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
 	private List<Address>address=new ArrayList<>();
 	@Embedded
 	@ElementCollection
@@ -43,8 +44,9 @@ public class User {
 	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
 	@JsonIgnore
 	private List<Rating>ratings=new ArrayList<>();
-	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
 	@JsonIgnore
+	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+	
 	private List<Review>rivews=new ArrayList<>();
 	private LocalDateTime createdAt;
 	
