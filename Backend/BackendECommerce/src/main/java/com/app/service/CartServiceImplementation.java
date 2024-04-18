@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.app.exception.ProductException;
 import com.app.model.Cart;
+import com.app.model.CartItem;
+import com.app.model.Product;
 import com.app.model.User;
 import com.app.repository.CartRepository;
 import com.app.request.AddItemRequest;
@@ -26,14 +28,47 @@ public class CartServiceImplementation implements CartService{
 
 	@Override
 	public String addCartItem(Long userId, AddItemRequest req) throws ProductException {
-		// TODO Auto-generated method stub
-		return null;
+		Cart cart=cartRepository.findByUserId(userId);
+		Product product=productService.findProductById(req.getProductId());
+		CartItem isPresent=cartItemService.isCartItemExist(cart, product,req.getSize(), userId);
+		if(isPresent==null)
+		{
+			CartItem cartItem=new CartItem();
+			cartItem.setProduct(product);
+			cartItem.setCart(cart);
+			cartItem.setQuantity(req.getQuantity());
+			cartItem.setUserId(userId);
+			int price =req.getQuantity()*product.getDiscountedPrice();
+			cartItem.setPrice(price);
+			cartItem.setSize(req.getSize());
+			CartItem createdCartItem=cartItemService.createCartItem(cartItem);
+			cart.getCartItems().add(createdCartItem);
+		}
+
+		return "Item added to cart Successfully";
 	}
 
 	@Override
 	public Cart findUserCart(Long userId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Cart cart=cartRepository.findByUserId(userId);
+		int totalPrice=0;
+		int totalDiscountedPrice=0;
+		int totalItem=0;
+		
+		for(CartItem cartItem :cart.getCartItems()) {
+		
+		totalPrice=totalPrice+cartItem.getPrice();
+		totalDiscountedPrice=totalDiscountedPrice+cartItem.getDiscountedPrice();
+		totalItem=totalItem+cartItem.getQuantity();
+		
+		}
+		cart.setTotalDiscountedPrice(totalDiscountedPrice);
+		cart.setTotalltem(totalItem);
+		cart.setTotalPrice(totalPrice);
+		cart.setDiscounte(totalPrice-totalDiscountedPrice);
+		return cartRepository.save(cart);
+
 	}
 
 }
