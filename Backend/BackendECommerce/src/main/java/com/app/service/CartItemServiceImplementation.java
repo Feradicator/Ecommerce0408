@@ -1,5 +1,7 @@
 package com.app.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.app.exception.CartItemException;
@@ -66,8 +68,11 @@ public class CartItemServiceImplementation implements CartItemService {
 
 	@Override
 	public CartItem findCartItemById(Long cartItemId) throws CartItemException {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<CartItem>opt=cartItemRepository.findById(cartItemId);
+		if(opt.isPresent())
+		return opt.get();
+		else
+		throw new CartItemException("cartItem not found with id "+cartItemId);
 	}
 
 }

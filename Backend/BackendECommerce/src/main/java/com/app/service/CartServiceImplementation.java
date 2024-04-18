@@ -1,5 +1,6 @@
 package com.app.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.exception.ProductException;
@@ -10,12 +11,17 @@ import com.app.request.AddItemRequest;
 
 @Service
 public class CartServiceImplementation implements CartService{
+	@Autowired
     private CartRepository cartRepository;
-    private
+	@Autowired
+    private CartItemService cartItemService;
+	@Autowired
+	private ProductService productService;
 	@Override
 	public Cart createCart(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		Cart cart=new Cart();
+		cart.setUser(user);
+		return cartRepository.save(cart);
 	}
 
 	@Override
