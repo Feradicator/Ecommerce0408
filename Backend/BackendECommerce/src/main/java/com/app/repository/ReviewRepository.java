@@ -5,3 +5,4 @@ import com.app.model.Review;
 public interface ReviewRepository extends JpaRepository<Review,Long> {
 
 }
+ 
