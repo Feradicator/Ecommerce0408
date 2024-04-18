@@ -9,12 +9,13 @@ import com.app.exception.OrderException;
 import com.app.model.Address;
 import com.app.model.Order;
 import com.app.model.User;
+import com.app.repository.CartRepository;
 @Service
 public class OrderServiceImplementation implements OrderService {
 	@Autowired
 	private CartRepository cartRepository;
 	@Autowired
-	private CartItemService cartItemService;
+	private CartService cartItemService;
 	@Autowired
 	private ProductService productService;
 
