@@ -14,7 +14,7 @@ const style = {
     boxShadow: 24,
     p: 4,
   };
-const AuthModal = (handleClose,open) => {
+const AuthModal = ({handleClose,open}) => {
     const location=useLocation();
     return (
         <div>
