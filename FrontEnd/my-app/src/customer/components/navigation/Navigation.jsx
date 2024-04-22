@@ -21,7 +21,7 @@ export default function Navigation() {
   const [anchorEl, setAnchorEl] = useState(null);
   const openUserMenu = Boolean(anchorEl);
   const jwt = localStorage.getItem("jwt");
-  const {auth}=useSelector(store=>store);
+  const {auth,cart}=useSelector((store)=>store);
   const dispatch=useDispatch();
   const location=useLocation();
   const handleUserClick = (event) => {
@@ -46,13 +46,13 @@ export default function Navigation() {
     if(jwt){
         dispatch(getUSer(jwt))
     }
-},[jwt,auth.jwt]
+},[jwt]
 )
   useEffect(()=>
   {
     if(auth.user)
     {
-      handleClose()
+      handleClose();
     }
     if(location.pathname==="/login" || location.pathname==="/register")
     {
@@ -61,8 +61,9 @@ export default function Navigation() {
   },[auth.user])
   const handleLogout=()=>
   {
-    dispatch(logout())
+    
     handleCloseUserMenu()
+    dispatch(logout());
   }
 
   return (
@@ -355,7 +356,7 @@ export default function Navigation() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {auth.user?.firstName ? (
+                  {auth.user ? (
                     <div>
                       <Avatar
                         className=" text-white"
