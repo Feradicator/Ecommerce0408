@@ -141,4 +141,10 @@ public class ProductServiceImplementation implements ProductService {
 		
 	}
 
+	@Override
+	public List<Product> findAllProducts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

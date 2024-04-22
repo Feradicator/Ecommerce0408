@@ -2,10 +2,10 @@ package com.app.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
+
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 
 import lombok.AllArgsConstructor;
@@ -15,7 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+
 public class PaymentInformation {
+	
 	@Column(name = "cardholder_name")
 	private String cardholderName;
 	@Column(name = "card_number")

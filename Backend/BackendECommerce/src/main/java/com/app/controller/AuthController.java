@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.config.JwtProvider;
 import com.app.exception.UserException;
+import com.app.model.Cart;
 import com.app.model.User;
 import com.app.repository.UserRepository;
 import com.app.request.LoginRequest;
 import com.app.response.AuthResponse;
+import com.app.service.CartService;
 import com.app.service.CustomUserServiceImplementation;
 
 
@@ -35,14 +39,17 @@ public class AuthController {
     private CustomUserServiceImplementation customUserService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private CartService cartService;
 
     @PostMapping("/signup")
-    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws UserException {
+    public ResponseEntity<AuthResponse> createUserHandler( @Valid @RequestBody User user) throws UserException {
         System.out.println(user);
         String email = user.getEmail();
         String password = user.getPassword();
         String firstName = user.getFirstName();
         String lastName = user.getLastName();
+        String role=user.getRole();
         User isEmailExist = userRepo.findByEmail(email);
         if (isEmailExist != null) {
             throw new UserException("Email Is Already Used With Another Account");
@@ -53,16 +60,19 @@ public class AuthController {
         createdUser.setPassword(passwordEncoder.encode(password));
         createdUser.setFirstName(firstName);
         createdUser.setLastName(lastName);
+        createdUser.setRole(role);
         User savedUser = userRepo.save(createdUser);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(savedUser.getEmail(),
-                savedUser.getPassword());
+        Cart cart=cartService.createCart(savedUser);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(email,
+                password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.generateToken(authentication);
 
         AuthResponse authResponse = new AuthResponse();
+        authResponse.setStatus(true);
         authResponse.setJwt(token);
         authResponse.setMessage("signup success");
-        return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
+        return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
 
     }
     @PostMapping("/signin")
@@ -73,7 +83,7 @@ public class AuthController {
         Authentication authentication=authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication (authentication);
         String token = jwtProvider.generateToken(authentication);
-        AuthResponse authResponse=new AuthResponse(token, "Signin Success");
+        AuthResponse authResponse=new AuthResponse(token, "Signin Success",true);
         return new ResponseEntity<AuthResponse>(authResponse,HttpStatus.CREATED);
 
          

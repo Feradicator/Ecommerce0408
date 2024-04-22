@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.app.exception.ProductException;
 import com.app.model.Review;
@@ -12,6 +13,7 @@ import com.app.model.Product;
 import com.app.repository.ReviewRepository;
 import com.app.request.ReviewRequest;
 import com.app.repository.ProductRepository;
+@Service
 public class ReviewServiceImplementation implements ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;

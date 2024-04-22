@@ -4,14 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
-public class AuthResponse {
-    private String jwt;
+public class ApiResponse {
     private String message;
     private Boolean status;
 
-
-    
 }

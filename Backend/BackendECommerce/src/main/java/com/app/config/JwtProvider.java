@@ -19,7 +19,7 @@ public class JwtProvider {
 	public String generateToken(Authentication auth) {
 		String jwt=Jwts.builder()
 				.setIssuedAt(new Date())
-				.setExpiration(new Date(new Date().getTime()+846000000))
+				.setExpiration(new Date(new Date().getTime()+86400000))
 				.claim("email", auth.getName())
 				.signWith(key).compact();
 		return jwt;

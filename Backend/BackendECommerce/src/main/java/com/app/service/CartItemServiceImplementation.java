@@ -3,6 +3,7 @@ package com.app.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.app.exception.CartItemException;
 import com.app.exception.UserException;
@@ -11,15 +12,14 @@ import com.app.model.User;
 import com.app.model.CartItem;
 import com.app.model.Product;
 import com.app.repository.CartItemRepository;
-import com.app.repository.CartRepository;
 
+@Service
 public class CartItemServiceImplementation implements CartItemService {
     @Autowired
     private CartItemRepository cartItemRepository;
     @Autowired
     private UserService userService;
-    @Autowired
-    private CartRepository cartRepository;
+    
 	@Override
 	public CartItem createCartItem(CartItem cartItem) {
 		cartItem.setQuantity(1);
