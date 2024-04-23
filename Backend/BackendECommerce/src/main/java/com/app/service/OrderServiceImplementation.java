@@ -1,6 +1,7 @@
 package com.app.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -91,56 +92,69 @@ public class OrderServiceImplementation implements OrderService {
 	}
 
 	@Override
-	public Order findOrderByld(Long orderld) throws OrderException {
-		// TODO Auto-generated method stub
-		return null;
+	public Order findOrderById(Long orderId) throws OrderException {
+		Optional<Order> opt=orderRepository.findById(orderId);
+		
+		if(opt.isPresent()) {
+			return opt.get();
+		}
+		throw new OrderException("order not exist with id "+orderId);
 	}
 
 	@Override
-	public List<Order> usersOrderHistory(Long userld) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Order> usersOrderHistory(Long userId) {
+		List<Order> orders=orderRepository.getUsersOrders(userId);
+		return orders;
 	}
 
 	@Override
-	public Order placedOrder(Long orderld) throws OrderException {
-		// TODO Auto-generated method stub
-		return null;
+	public Order placedOrder(Long orderId) throws OrderException {
+		Order order=findOrderById(orderId);
+		order.setOrderStatus(OrderStatus.PLACED);
+		order.getPaymentDetails().setStatus(PaymentStatus.COMPLETED);
+		return order;
 	}
 
 	@Override
-	public Order confirmedOrder(Long orderld) throws OrderException {
-		// TODO Auto-generated method stub
-		return null;
+	public Order confirmedOrder(Long orderId) throws OrderException {
+		Order order=findOrderById(orderId);
+		order.setOrderStatus(OrderStatus.CONFIRMED);
+		
+		
+		return orderRepository.save(order);
 	}
 
 	@Override
-	public Order shippedOrder(Long orderld) throws OrderException {
-		// TODO Auto-generated method stub
-		return null;
+	public Order shippedOrder(Long orderId) throws OrderException {
+		Order order=findOrderById(orderId);
+		order.setOrderStatus(OrderStatus.SHIPPED);
+		return orderRepository.save(order);
 	}
 
 	@Override
-	public Order deliveredOrder(Long orderld) throws OrderException {
-		// TODO Auto-generated method stub
-		return null;
+	public Order deliveredOrder(Long orderId) throws OrderException {
+		Order order=findOrderById(orderId);
+		order.setOrderStatus(OrderStatus.DELIVERED);
+		return orderRepository.save(order);
 	}
 
 	@Override
-	public Order cancledOrder(Long orderld) throws OrderException {
-		// TODO Auto-generated method stub
-		return null;
+	public Order cancledOrder(Long orderId) throws OrderException {
+		Order order=findOrderById(orderId);
+		order.setOrderStatus(OrderStatus.CANCELLED);
+		return orderRepository.save(order);
 	}
 
 	@Override
 	public List<Order> getAllOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		return orderRepository.findAllByOrderByCreatedAtDesc();
 	}
 
 	@Override
-	public void deleteOrder(Long orderld) throws OrderException {
-		// TODO Auto-generated method stub
+	public void deleteOrder(Long orderId) throws OrderException {
+		Order order =findOrderById(orderId);
+		
+		orderRepository.deleteById(orderId);
 
 	}
 

@@ -8,15 +8,15 @@ import com.app.model.Order;
 
 public interface OrderService {
     public Order createdOrder(User user,Address shippingAddress);
-    public Order findOrderByld(Long orderld) throws OrderException;
+    public Order findOrderById(Long orderId) throws OrderException;
     public List<Order> usersOrderHistory(Long userld);
-    public Order placedOrder(Long orderld) throws OrderException; 
-    public Order confirmedOrder(Long orderld)throws OrderException;
-    public Order shippedOrder(Long orderld) throws OrderException; 
-    public Order deliveredOrder(Long orderld) throws OrderException;
-    public Order cancledOrder(Long orderld) throws OrderException; 
+    public Order placedOrder(Long orderId) throws OrderException; 
+    public Order confirmedOrder(Long orderId)throws OrderException;
+    public Order shippedOrder(Long orderId) throws OrderException; 
+    public Order deliveredOrder(Long orderId) throws OrderException;
+    public Order cancledOrder(Long orderId) throws OrderException; 
     public List<Order>getAllOrders();
-    public void deleteOrder(Long orderld) throws OrderException;
+    public void deleteOrder(Long orderId) throws OrderException;
 
 
 }
