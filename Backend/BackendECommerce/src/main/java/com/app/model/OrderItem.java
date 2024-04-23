@@ -31,7 +31,7 @@ public class OrderItem {
     private int quantity;
     private Integer price;
     private Integer discountedPrice;
-    private Long userld;
+    private Long userId;
     private LocalDateTime deliveryDate;
 
 
