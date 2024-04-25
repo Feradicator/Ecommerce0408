@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,6 +22,7 @@ import com.app.repository.CategoryRepository;
 import com.app.repository.ProductRepository;
 import com.app.request.CreateProductRequest;
 @Service
+@Transactional
 public class ProductServiceImplementation implements ProductService {
 	@Autowired
 	private ProductRepository productRepository;
@@ -29,33 +33,34 @@ public class ProductServiceImplementation implements ProductService {
 
 	@Override
 	public Product createProduct(CreateProductRequest req) {
-		Category topLevel=categoryRepository.findByName(req.getTopLevelCategory());
-		if(topLevel==null) {
+		Category topLavel=categoryRepository.findByName(req.getTopLavelCategory());
+		if(topLavel==null) {
 		
-			Category topLevelCategory=new Category();
-			topLevelCategory.setName(req.getTopLevelCategory());
-			topLevelCategory.setLevel(1);
-			topLevel=categoryRepository.save(topLevelCategory);
+			Category topLavelCategory=new Category();
+			topLavelCategory.setName(req.getTopLavelCategory());
+			topLavelCategory.setLavel(1);
+			topLavel=categoryRepository.save(topLavelCategory);
 		}
-		Category secondLevel=categoryRepository.
-		findByNameAndParent(req.getSecondLevelCategory(),topLevel.getName());
-		if(secondLevel==null) {
+		Category secondLavel=categoryRepository.
+		findByNameAndParent(req.getSecondLavelCategory(),topLavel.getName());
+		if(secondLavel==null) {
 		Category secondLavelCategory=new Category();
-		secondLavelCategory.setName(req.getSecondLevelCategory());
-		secondLavelCategory.setParentCategory(topLevel);
-		secondLavelCategory.setLevel(2);
-		secondLevel=categoryRepository.save(secondLavelCategory);
+		secondLavelCategory.setName(req.getSecondLavelCategory());
+		secondLavelCategory.setParentCategory(topLavel);
+		secondLavelCategory.setLavel(2);
+		secondLavel=categoryRepository.save(secondLavelCategory);
 		}
-		Category thirdLevel=categoryRepository.
-		findByNameAndParent(req.getThirdLevelCategory(),secondLevel.getName());
-		if(thirdLevel==null) {
-		Category thirdLevelCategory=new Category();
-		thirdLevelCategory.setName(req.getThirdLevelCategory());
-		thirdLevelCategory.setParentCategory(secondLevel);
-		thirdLevelCategory.setLevel(3);
-		thirdLevel=categoryRepository.save(thirdLevelCategory);
+		Category thirdLavel=categoryRepository.
+		findByNameAndParent(req.getThirdLavelCategory(),secondLavel.getName());
+		if(thirdLavel==null) {
+		Category thirdLavelCategory=new Category();
+		thirdLavelCategory.setName(req.getThirdLavelCategory());
+		thirdLavelCategory.setParentCategory(secondLavel);
+		thirdLavelCategory.setLavel(3);
+		thirdLavel=categoryRepository.save(thirdLavelCategory);
 		}
-		Product product =new Product(); product.setTitle(req.getTitle()); product.setColor(req.getColor());
+		Product product =new Product();
+		product.setTitle(req.getTitle()); product.setColor(req.getColor());
 		product.setDescription(req.getDescription());
 		product.setDiscountedPrice (req.getDiscountedPrice()); product.setDiscountPersent(req.getDiscountPersent());
 		product.setImageUrl(req.getImageUrl());
@@ -63,7 +68,7 @@ public class ProductServiceImplementation implements ProductService {
 		product.setPrice(req.getPrice());
 		product.setSizes(req.getSize());
 		product.setQuantity(req.getQuantity());
-		product.setCategory(thirdLevel);
+		product.setCategory(thirdLavel);
 		product.setCreatedAt(LocalDateTime.now());
 		Product savedProduct =productRepository.save(product);
 
@@ -100,7 +105,10 @@ public class ProductServiceImplementation implements ProductService {
 		Optional<Product>opt=productRepository.findById(id);
 		if(opt.isPresent())
 		{
-			return opt.get();
+			Product product = opt.get();
+			// Explicitly initialize the ratings collection within the same Hibernate session
+			Hibernate.initialize(product.getRatings());
+			return product;
 		}
 
 		throw new ProductException("Product not found with id "+id);
@@ -113,11 +121,14 @@ public class ProductServiceImplementation implements ProductService {
 	}
 
 	@Override
+	
 	public Page<Product> getAllProduct(String category, List<String> colors, List<String> sizes, Integer minPrice,
 			Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize) {
 		// TODO Auto-generated method stub
 		Pageable pageable=PageRequest.of(pageNumber, pageSize);
-		List<Product>products=productRepository.filterProducts(category, minPrice, minDiscount, maxPrice, sort);
+		List<Product>products=productRepository.filterProducts(category, minPrice, maxPrice,minDiscount, sort);
+		
+		System.out.println(products);
 		if(!colors.isEmpty())
 		{
 			products=products.stream().filter(p->colors.stream().anyMatch(c->c.equalsIgnoreCase(p.getColor()))).collect(Collectors.toList());
@@ -134,6 +145,7 @@ public class ProductServiceImplementation implements ProductService {
 			int startIndex=(int)pageable.getOffset();
 			int endIndex=Math.min(startIndex + pageable.getPageSize(), products.size());
 			List<Product> pageContent=products.subList(startIndex, endIndex);
+			System.out.println(pageContent);
 			Page<Product> filteredProducts=new PageImpl<>(pageContent,pageable,products.size());
 			return filteredProducts;
 
@@ -142,9 +154,18 @@ public class ProductServiceImplementation implements ProductService {
 	}
 
 	@Override
-	public List<Product> findAllProducts() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> getAllProducts() {
+		return productRepository.findAll();
+	}
+	@Override
+	public List<Product> searchProduct(String query) {
+		List<Product> products=productRepository.searchProduct(query);
+		return products;
+	}
+	@Override
+	public List<Product> recentlyAddedProduct() {
+		
+		return productRepository.findTop10ByOrderByCreatedAtDesc();
 	}
 
 }

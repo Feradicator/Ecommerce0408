@@ -17,15 +17,19 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.app.user.domain.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "customer_order")
 @AllArgsConstructor
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 public class Order {
     @Id
@@ -36,6 +40,7 @@ public class Order {
     @ManyToOne
     private User user;
     @OneToMany(mappedBy="order", cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonIgnore
     private List<OrderItem>orderItems=new ArrayList<>();
     private LocalDateTime orderDate;
     private LocalDateTime deliveryDate;

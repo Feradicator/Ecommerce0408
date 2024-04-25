@@ -8,11 +8,14 @@ import com.app.user.domain.PaymentStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
 
 public class PaymentDetails {
     private PaymentMethod paymentMethod;

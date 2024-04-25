@@ -3,6 +3,8 @@ package com.app.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +16,7 @@ import com.app.model.User;
 import com.app.repository.UserRepository;
 
 @Service
+@Transactional
 public class CustomUserServiceImplementation implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;

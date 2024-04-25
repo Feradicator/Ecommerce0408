@@ -3,6 +3,8 @@ package com.app.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import com.app.model.Product;
 import com.app.repository.RatingRepository;
 import com.app.request.RatingRequest;
 @Service
+@Transactional
 public class RatingServiceImplementation implements RatingService  {
     @Autowired
     private RatingRepository ratingRepository;

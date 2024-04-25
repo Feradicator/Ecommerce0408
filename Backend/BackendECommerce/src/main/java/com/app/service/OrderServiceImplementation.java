@@ -2,6 +2,9 @@ package com.app.service;
 
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -23,6 +26,7 @@ import com.app.repository.UserRepository;
 import com.app.user.domain.OrderStatus;
 import com.app.user.domain.PaymentStatus;
 @Service
+@Transactional
 public class OrderServiceImplementation implements OrderService {
 	@Autowired
 	private CartRepository cartRepository;

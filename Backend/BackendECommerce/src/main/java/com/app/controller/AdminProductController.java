@@ -26,7 +26,7 @@ private ProductService productService;
 @PostMapping("/")
 public ResponseEntity<Product> createProduct(@RequestBody CreateProductRequest req){
 Product product=productService.createProduct(req);
-return new ResponseEntity<Product>(product, HttpStatus.CREATED);
+return new ResponseEntity<Product>(product, HttpStatus.ACCEPTED);
 }
 
 
@@ -40,7 +40,7 @@ return new ResponseEntity<>(res, HttpStatus.OK);
 
 @GetMapping("/all")
 public ResponseEntity<List<Product>> findAllProduct(){
-List<Product> products= productService.findAllProducts();
+List<Product> products= productService.getAllProducts();
 return new ResponseEntity<>(products,HttpStatus.OK);
 }
 @PutMapping("/{productId}/update")

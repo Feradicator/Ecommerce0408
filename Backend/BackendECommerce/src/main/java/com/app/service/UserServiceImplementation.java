@@ -2,6 +2,8 @@ package com.app.service;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import com.app.exception.UserException;
 import com.app.model.User;
 import com.app.repository.UserRepository;
 @Service
+@Transactional
 public class UserServiceImplementation implements UserService {
 	@Autowired
 	private UserRepository userRepository;
@@ -31,7 +34,9 @@ public class UserServiceImplementation implements UserService {
 	public User findUserProfileByJwt(String jwt) throws UserException {
 		// TODO Auto-generated method stub
 		String email=jwtProvider.getEmailFromToken(jwt);
+		
 		User user=userRepository.findByEmail(email);
+		System.out.println(user+"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
 		if(user==null)
 		throw new UserException("user not found with email "+email);
 		return user;

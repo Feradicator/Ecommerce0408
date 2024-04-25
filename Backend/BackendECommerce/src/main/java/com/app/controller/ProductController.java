@@ -24,9 +24,18 @@ public class ProductController {
         @RequestParam List<String>color,@RequestParam List<String> size,@RequestParam Integer minPrice,
         @RequestParam Integer maxPrice, @RequestParam Integer minDiscount, @RequestParam String sort, 
         @RequestParam String stock, @RequestParam Integer pageNumber,@RequestParam Integer pageSize){
-
+            System.out.println("category"+category);
+            System.out.println(color);
+            System.out.println(size);
+            System.out.println(minPrice);
+            System.out.println(maxPrice);
+            System.out.println(minDiscount);
+            System.out.println(sort);
+            System.out.println(stock);
+            System.out.println(pageNumber);
         Page<Product> res= productService.getAllProduct(
         category, color, size, minPrice, maxPrice, minDiscount, sort, stock,pageNumber,pageSize);
+        
         System.out.println("complete products");
         return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
 }
@@ -34,13 +43,14 @@ public class ProductController {
     public ResponseEntity<Product> findProductByIdHandler(@PathVariable Long productId) throws ProductException {
     
     Product product=productService.findProductById(productId);
+    
     return new ResponseEntity<Product>(product, HttpStatus.ACCEPTED);
     }
-    // @GetMapping("/products/search")
-    // public ResponseEntity<List<Product>> searchProductHandler(@RequestParam String q){
-    // List<Product> products=productService.searchProduct(q);
-    // return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
-    // }
+    @GetMapping("/products/search")
+    public ResponseEntity<List<Product>> searchProductHandler(@RequestParam String q){
+    List<Product> products=productService.searchProduct(q);
+    return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
+    }
 
 
 

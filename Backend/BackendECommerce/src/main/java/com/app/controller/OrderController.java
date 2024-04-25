@@ -52,7 +52,7 @@ public class OrderController {
     @PathVariable("Id") Long orderId,
     @RequestHeader("Authorization") String jwt) throws UserException, OrderException{
     User user=userService.findUserProfileByJwt(jwt);
-    Order order =orderService.findOrderByld (orderId);
+    Order order =orderService.findOrderById (orderId);
     return new ResponseEntity<>(order,HttpStatus.ACCEPTED);
 
         

@@ -1,5 +1,7 @@
 package com.app.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import com.app.repository.CartRepository;
 import com.app.request.AddItemRequest;
 
 @Service
+@Transactional
 public class CartServiceImplementation implements CartService{
 	@Autowired
     private CartRepository cartRepository;
@@ -29,18 +32,26 @@ public class CartServiceImplementation implements CartService{
 	@Override
 	public String addCartItem(Long userId, AddItemRequest req) throws ProductException {
 		Cart cart=cartRepository.findByUserId(userId);
-		Product product=productService.findProductById(req.getProductId());
-		CartItem isPresent=cartItemService.isCartItemExist(cart, product,req.getSize(), userId);
+		System.out.println(cart);
+		 Product product=productService.findProductById(req.getProductId());
+		 System.out.println(product);
+		 CartItem isPresent=cartItemService.isCartItemExist(cart, product,req.getSize(), userId);
+		 System.out.println(
+			isPresent
+		 );
 		if(isPresent==null)
 		{
 			CartItem cartItem=new CartItem();
 			cartItem.setProduct(product);
 			cartItem.setCart(cart);
 			cartItem.setQuantity(req.getQuantity());
+			System.out.println(req.getQuantity());
 			cartItem.setUserId(userId);
+			System.out.println(cartItem);
 			int price =req.getQuantity()*product.getDiscountedPrice();
 			cartItem.setPrice(price);
 			cartItem.setSize(req.getSize());
+			System.out.println(cartItem);
 			CartItem createdCartItem=cartItemService.createCartItem(cartItem);
 			cart.getCartItems().add(createdCartItem);
 		}

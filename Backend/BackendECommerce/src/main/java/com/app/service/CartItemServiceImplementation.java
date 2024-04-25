@@ -2,6 +2,8 @@ package com.app.service;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import com.app.model.Product;
 import com.app.repository.CartItemRepository;
 
 @Service
+@Transactional
 public class CartItemServiceImplementation implements CartItemService {
     @Autowired
     private CartItemRepository cartItemRepository;
