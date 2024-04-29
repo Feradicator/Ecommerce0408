@@ -1,4 +1,4 @@
-import { API_BASE_URL } from '../../config/api';
+import  { api,API_BASE_URL } from "../../config/apiConfig";
 import {
     CREATE_PAYMENT_REQUEST,
     CREATE_PAYMENT_SUCCESS,

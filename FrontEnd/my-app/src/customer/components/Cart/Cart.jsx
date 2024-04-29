@@ -7,10 +7,7 @@ import { useEffect } from "react";
 import { getCart } from '../../../State/Cart/Action';
 const Cart = () => {
     const navigate=useNavigate();
-    const handleCheckout=()=>
-    {
-        navigate("/checkout?step=2")
-    }
+   
     const dispatch = useDispatch();
   
   const jwt = localStorage.getItem("jwt");
@@ -19,7 +16,10 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(getCart(jwt));
-  }, [jwt]);
+  }, [jwt,cart.updateCartItems,cart.deleteCartItems]);
+ 
+  
+  
   return (
     <div className="">
       {cart.cartItems.length>0 && <div className="lg:grid grid-cols-3 lg:px-16 relative">
