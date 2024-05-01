@@ -22,8 +22,22 @@ const HomeSectionCarosel = ({sectionName,data}) => {
           itemsFit: "contain",
         },
       };
-    const slidePrev=()=>setActiveIndex(activeIndex-1);
-    const slideNext=()=>setActiveIndex(activeIndex+1);
+      const slidePrev = () => {
+        if (activeIndex > 0) {
+          setActiveIndex(activeIndex - 1);
+        } else {
+          setActiveIndex(items.length - 1); // Loop back to the last item if at the beginning
+        }
+      };
+      
+      const slideNext = () => {
+        if (activeIndex < items.length - 1) {
+          setActiveIndex(activeIndex + 1);
+        } else {
+          setActiveIndex(0); // Loop back to the first item if at the end
+        }
+      };
+      
     const syncActiveIndex=({item})=>setActiveIndex(item);
     const items = data?.slice(0, 10).map((item) => (
     <div className="">
@@ -38,13 +52,12 @@ const HomeSectionCarosel = ({sectionName,data}) => {
             <h2 className='text-2xl font-extrabold text-gray-800 py-5'>{sectionName}</h2>
             <div className="relative p-5 ">
                 <AliceCarousel
-                disableButtonsControls
-                disableDotsControls
+               
                     items={items}
                     mouseTracking
                     responsive={responsive}
                     animationType="fadeout"
-                    animationDuration={2000}
+                    
                     onSlideChanged={syncActiveIndex}
                     activeIndex={activeIndex}
                 />

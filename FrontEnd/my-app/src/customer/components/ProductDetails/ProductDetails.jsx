@@ -99,7 +99,9 @@ function classNames(...classes) {
 }
 
 export default function ProductDetails() {
-  const [selectedSize, setSelectedSize] = useState();
+  
+  const defaultSize = product.sizes.find((size) => size.name === 'M');
+  const [selectedSize, setSelectedSize] = useState(defaultSize);
   const [activeImage, setActiveImage] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
