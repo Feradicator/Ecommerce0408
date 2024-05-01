@@ -307,7 +307,7 @@ export default function ProductDetails() {
                   
                   variant="contained"
                   type="submit"
-                  sx={{ px: "2rem", py: "1rem", bgcolor: "#9155fd" }}
+                  sx={{ padding: ".8rem 2rem", marginTop: "2rem" }}
                 >
                   Add to Cart
                 </Button>
