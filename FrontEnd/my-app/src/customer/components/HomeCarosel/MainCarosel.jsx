@@ -2,23 +2,32 @@ import React from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { MainCaroselData } from './MainCaroselData';
+import { useNavigate } from "react-router-dom";
 
-
-
+const handleDragStart = (e) => e.preventDefault();
 
 const MainCarousel = () => {
-    const items = MainCaroselData.map((item)=><img className='cursor-pointer' src={item.image} alt="" role='presentation'/>)
-
-    return( 
-    <AliceCarousel
-    items={items}
-    disableButtonsControls
-    autoPlay
-    autoPlayInterval={800}
-    infinite
-    
- 
-    />
-)}
+    const navigate = useNavigate();
+    const item = MainCaroselData.map((item) => (
+      <img
+        className="cursor-pointer rounded-md"
+        onClick={() => navigate(item.path)}
+        src={item.image}
+        alt=""
+        onDragStart={handleDragStart}
+        role="presentation"
+      />
+    ));
+    return (
+      <AliceCarousel
+        mouseTracking
+        items={item}
+        autoPlay
+        infinite
+        autoPlayInterval={2000}
+        disableButtonsControls
+      />
+    );
+  };
 
 export default MainCarousel;

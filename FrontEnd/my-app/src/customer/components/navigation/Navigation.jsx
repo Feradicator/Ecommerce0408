@@ -10,6 +10,7 @@ import AuthModal from '../../Auth/AuthModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { store } from '../../../State/store';
 import { getUSer, logout } from '../../../State/Auth/Action';
+import { getCart } from '../../../State/Cart/Action';
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -24,6 +25,8 @@ export default function Navigation() {
   const {auth,cart}=useSelector((store)=>store);
   const dispatch=useDispatch();
   const location=useLocation();
+  
+  
   const handleUserClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -45,6 +48,7 @@ export default function Navigation() {
   useEffect(()=>{
     if(jwt){
         dispatch(getUSer(jwt))
+        dispatch(getCart(jwt));
     }
 },[jwt]
 )
@@ -65,7 +69,12 @@ export default function Navigation() {
     handleCloseUserMenu()
     dispatch(logout());
   }
-
+  const handleMyOrderClick = () => {
+    handleCloseUserMenu();
+    auth.user?.role === "ROLE_ADMIN"
+      ? navigate("/admin")
+      : navigate("/account/order");
+  };
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -383,12 +392,10 @@ export default function Navigation() {
                           " aria-labelledby": "basic-button",
                         }}
                       >
-                        <MenuItem onClick={handleCloseUserMenu}>
-                          Profile
-                        </MenuItem>
-                        
-                        <MenuItem onClick={()=>navigate("/account/order")}>
-                          My Orders
+                       <MenuItem onClick={handleMyOrderClick}>
+                          {auth.user?.role === "ROLE_ADMIN"
+                            ? "Admin Dashboard"
+                            : "My Orders"}
                         </MenuItem>
                         <MenuItem onClick={handleLogout} >Logout</MenuItem>
 
@@ -409,21 +416,31 @@ export default function Navigation() {
                 </div>
 
                 {/* Search */}
-                <div className="flex lg:ml-6">
-                  <p className="p-2 text-gray-400 hover:text-gray-500">
-                    <span className="sr-only">Search</span>
-                    <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
-                  </p>
-                </div>
+                <div className="flex items-center lg:ml-6">
+                
+                <p onClick={()=>navigate("/products/search")} className="p-2 text-gray-400 hover:text-gray-500">
+                  <span className="sr-only">Search</span>
+                  
+                  <MagnifyingGlassIcon
+                    className="h-6 w-6"
+                    aria-hidden="true"
+                  />
+                </p>
+              </div>
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <Button className="group -m-2 flex items-center p-2">
+                  <Button
+                    onClick={() => navigate("/cart")}
+                    className="group -m-2 flex items-center p-2"
+                  >
                     <ShoppingBagIcon
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">2</span>
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                      {cart.cart?.totalItem}
+                    </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </Button>
                 </div>

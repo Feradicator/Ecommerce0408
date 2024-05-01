@@ -6,24 +6,31 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Button, TextField, AppBar } from '@mui/material';
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-const HomeSectionCarosel = ({data,sectionName}) => {
-    const [activeIndex1,setActiveIndex1]=useState(0);
+const HomeSectionCarosel = ({sectionName,data}) => {
+    const [activeIndex,setActiveIndex]=useState(0);
     const responsive = {
         0: {
-            items: 1
+          items: 2,
+          itemsFit: "contain",
         },
-        720: {
-            items: 3
+        568: {
+          items: 3,
+          itemsFit: "contain",
         },
         1024: {
-            items: 5.5 ,
-            itemsFit: 'contain'
+          items: 5.5,
+          itemsFit: "contain",
         },
-    };
-    const slidePrev=()=>setActiveIndex1(activeIndex1-1);
-    const slideNext=()=>setActiveIndex1(activeIndex1+1);
-    const syncActiveIndex=({item})=>setActiveIndex1(item);
-    const items = data.slice(0,10).map((item) => <HomeSectionCard product={item}/>);
+      };
+    const slidePrev=()=>setActiveIndex(activeIndex-1);
+    const slideNext=()=>setActiveIndex(activeIndex+1);
+    const syncActiveIndex=({item})=>setActiveIndex(item);
+    const items = data?.slice(0, 10).map((item) => (
+    <div className="">
+      {" "}
+      <HomeSectionCard product={item} />
+    </div>
+  ));
     console.log(items.length);
     return (
 
@@ -31,20 +38,23 @@ const HomeSectionCarosel = ({data,sectionName}) => {
             <h2 className='text-2xl font-extrabold text-gray-800 py-5'>{sectionName}</h2>
             <div className="relative p-5 ">
                 <AliceCarousel
+                disableButtonsControls
+                disableDotsControls
                     items={items}
-                   
+                    mouseTracking
                     responsive={responsive}
-                   
+                    animationType="fadeout"
+                    animationDuration={2000}
                     onSlideChanged={syncActiveIndex}
-                    activeIndex={activeIndex1}
+                    activeIndex={activeIndex}
                 />
-               {activeIndex1 !==items.length-5 && <Button variant="contained"  className="z-50" onClick={slideNext} sx={{ position: 'absolute', top: "8rem", right: "0rem", transform: "translateX(50%) rotate(90deg)" ,bgcolor:'white'}} aria-label="next">
+               {activeIndex!==items.length-5 && (<Button variant="contained"  className="z-50" onClick={slideNext} sx={{ position: 'absolute', top: "8rem", right: "0rem", transform: "translateX(50%) rotate(90deg)" ,bgcolor:'white'}} aria-label="next">
                     <KeyboardArrowLeftIcon sx={{ transform: "rotate(90deg)" ,color:'black'}} />
-                </Button>}
-                {activeIndex1!==0 &&
+                </Button>)}
+                {activeIndex!==0 &&(
                     <Button variant="contained" onClick={slidePrev} className="z-50" sx={{ position: 'absolute', top: "8rem", left: "0rem", transform: "translateX(-50%) rotate(90deg)" ,bgcolor:'white'}} aria-label="next">
                     <KeyboardArrowLeftIcon sx={{ transform: "rotate(-90deg)" ,color:'black'}} />
-                </Button>}
+                </Button>)}
 
             </div>
         </div>
@@ -52,3 +62,4 @@ const HomeSectionCarosel = ({data,sectionName}) => {
     )
 }
 export default HomeSectionCarosel 
+
