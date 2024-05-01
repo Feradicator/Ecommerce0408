@@ -11,7 +11,18 @@ import Order from './customer/components/Order/Order';
 import OrderDetails from './customer/components/Order/OrderDetails';
 import {Route,Routes}from 'react-router-dom'
 import CustomerRoutes from './Routes/CustomerRoutes';
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getUSer } from './State/Auth/Action';
 function App() {
+  const {auth}=useSelector(store=>store);
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+  useEffect(() => {
+    if (jwt) {
+      dispatch(getUSer(jwt));
+    }
+  }, [jwt]);
   return (
     <div className="App">
       <Routes>

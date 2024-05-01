@@ -123,6 +123,8 @@ export default function ProductDetails() {
     dispatch(findProductById(data));
     dispatch(getAllReviews(productId));
   }, [productId]);
+ 
+
   return (
     <div className="bg-white lg:px-20">
       <div className="pt-6">

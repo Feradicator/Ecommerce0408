@@ -58,11 +58,10 @@ export default function SearchProduct() {
   };
 
   useEffect(() => {
-    
-    dispatch(findProducts());
-  }, [
-   keyword
-  ]);
+    // Assuming you want to search for products with the keyword
+    dispatch(findProducts({ keyword: keyword }));
+  }, [dispatch, keyword]);
+  
 
  
 

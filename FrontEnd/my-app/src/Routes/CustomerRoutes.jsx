@@ -10,7 +10,11 @@ import Checkout from '../customer/components/Checkout/Checkout'
 import OrderDetails from '../customer/components/Order/OrderDetails'
 import Order from '../customer/components/Order/Order'
 import SearchProduct from '../customer/components/Product/SearchProduct'
-
+import About from '../customer/pages/HomePage/About'
+import Contact from '../customer/pages/HomePage/Contact'
+import PrivacyPolicy from '../customer/pages/HomePage/PrivacyPolicy'
+import TearmsCondition from '../customer/pages/HomePage/TearmsCondition'
+import RateProduct from '../customer/components/ReviewProduct/RateProduct'
 const CustomerRoutes=()=>
 {
     const location = useLocation();
@@ -32,16 +36,16 @@ return (
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/products/search" element={<SearchProduct/>}></Route>
         <Route path="/home" element={<HomePage />}></Route>
-        {/* <Route path="/about" element={<About />}></Route>
+        <Route path="/about" element={<About />}></Route>
         <Route path="/privaciy-policy" element={<PrivacyPolicy />}></Route>
         <Route path="/terms-condition" element={<TearmsCondition />}></Route>
-        <Route path="/contact" element={<Contact />}></Route> */}
+        <Route path="/contact" element={<Contact />}></Route>
         <Route path="/:lavelOne/:lavelTwo/:lavelThree" element={<Product />}></Route>
         <Route path="/product/:productId" element={<ProductDetails />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/account/order" element={<Order />}></Route>
         <Route path="/account/order/:orderId" element={<OrderDetails />}></Route>
-        {/* <Route path="/account/rate/:productId" element={<RateProduct />}></Route> */}
+        <Route path="/account/rate/:productId" element={<RateProduct />}></Route>
         <Route path="/checkout" element={<Checkout />}></Route>
         {/* <Route path="/payment/:orderId" element={<PaymentSuccess />}></Route> */}
 
