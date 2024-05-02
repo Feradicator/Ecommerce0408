@@ -15,6 +15,7 @@ import Contact from '../customer/pages/HomePage/Contact'
 import PrivacyPolicy from '../customer/pages/HomePage/PrivacyPolicy'
 import TearmsCondition from '../customer/pages/HomePage/TearmsCondition'
 import RateProduct from '../customer/components/ReviewProduct/RateProduct'
+import PaymentSuccess from '../customer/components/paymentSuccess/PaymentSuccess'
 const CustomerRoutes=()=>
 {
     const location = useLocation();
@@ -47,7 +48,7 @@ return (
         <Route path="/account/order/:orderId" element={<OrderDetails />}></Route>
         <Route path="/account/rate/:productId" element={<RateProduct />}></Route>
         <Route path="/checkout" element={<Checkout />}></Route>
-        {/* <Route path="/payment/:orderId" element={<PaymentSuccess />}></Route> */}
+        <Route path="/payment/:orderId" element={<PaymentSuccess />}></Route>
 
         </Routes>
         <div>
