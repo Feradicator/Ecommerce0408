@@ -39,8 +39,8 @@ export const findProducts = (reqData) => async (dispatch) => {
   try {
     dispatch({ type: FIND_PRODUCTS_BY_CATEGORY_REQUEST });
 
-    const { data } = await api.get(
-      `/api/products?color=${colors}&size=${sizes}&minPrice=${minPrice}&maxPrice=${maxPrice}&minDiscount=${minDiscount}&category=${category}&stock=${stock}&sort=${sort}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+    const { data } = await axios.get(
+      `${API_BASE_URL}/products?color=${colors}&size=${sizes}&minPrice=${minPrice}&maxPrice=${maxPrice}&minDiscount=${minDiscount}&category=${category}&stock=${stock}&sort=${sort}&pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
 
     console.log("get product by category - ", data);
@@ -63,7 +63,8 @@ export const findProductById = (reqData) => async (dispatch) => {
   try {
     dispatch({ type: FIND_PRODUCT_BY_ID_REQUEST });
 
-    const { data } = await api.get(`/api/products/id/${reqData.productId}`);
+    const { data } = await axios.get(
+      `${API_BASE_URL}/products/id/${reqData.productId}`);
 
     console.log("products by  id : ", data);
     dispatch({
@@ -85,7 +86,8 @@ export const searchProduct = (keyword) => async (dispatch) => {
   try {
     dispatch({ type: SEARCH_PRODUCT_REQUEST });
 
-    const { data } = await api.get(`/api/products/search`,{
+    const { data } = await axios.get(
+      `${API_BASE_URL}/products/search`,{
       params:{
         q:keyword
       }

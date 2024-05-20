@@ -15,7 +15,7 @@ import com.app.model.Product;
 import com.app.service.ProductService;
 import com.app.exception.ProductException;
 @RestController
-@RequestMapping("/api")
+
 public class ProductController {
     @Autowired
     private ProductService productService;
