@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { store } from '../../../State/store';
 import { getUSer, logout } from '../../../State/Auth/Action';
 import { getCart } from '../../../State/Cart/Action';
+import home from './home.png'
+import HomeIcon from '@heroicons/react/24/outline';
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -220,7 +222,7 @@ export default function Navigation() {
 
       <header className="relative bg-white">
         <p className="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-          Get free delivery on orders over $100
+          Get free delivery on orders over 100
         </p>
 
         <nav aria-label="Top" className="mx-auto ">
@@ -240,10 +242,11 @@ export default function Navigation() {
               <div className="ml-4 flex lg:ml-0">
 
                 <span className="sr-only">Your Company</span>
-                <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                <img  onClick={() => navigate(`/`)}
+                 className="h-8 w-auto cursor-pointer" 
+                  src={home}
                   alt=""
+                  
                 />
 
               </div>
@@ -351,15 +354,7 @@ export default function Navigation() {
                     </Popover>
                   ))}
 
-                  {navigation.pages.map((page) => (
-                    <a
-                      key={page.name}
-                      href={page.href}
-                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                    >
-                      {page.name}
-                    </a>
-                  ))}
+              
                 </div>
               </Popover.Group>
 
