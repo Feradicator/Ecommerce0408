@@ -18,7 +18,7 @@ const HomePage=()=>
     useEffect(() => {
         const fetchData = async () => {
           try {
-            console.log("yooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+           
             const category1='mens_kurta'
             const category2='mens_shoes'
             const category3='dress';
@@ -69,8 +69,7 @@ const HomePage=()=>
             setJeans(dataresponse5);
             setLoading(false);
 
-           console.log(menKurta)
-            console.log("yooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+           
 
 
             

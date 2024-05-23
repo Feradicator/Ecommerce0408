@@ -3,14 +3,43 @@ import CartItem from './CartItem'
 import { Button, Box, TextField, AppBar, Rating, Grid, LinearProgress } from '@mui/material';
 import {useNavigate} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { getCart } from '../../../State/Cart/Action';
+import EmptyCart from './EmptyCart.png'
+import AuthModal from '../../Auth/AuthModal';
+import LoginForm from '../../Auth/LoginForm';
 const Cart = () => {
+  const [openAuthModal, setOpenAuthModal] = useState(false);
+  const [openLoginForm,setOpenLoginForm]=useState(false);
+  
+  
+  const handleOpenAuth = () => {
+    setOpenAuthModal(true);
+  };
+  const handleCloseAuth = () => {
+
+    setOpenAuthModal(false);
+   
+  };
+
+  const handleOpenLogin = () => {
+    setOpenLoginForm(true);
+  };
+  const handleCloseLogin = () => {
+
+    setOpenLoginForm(false);
+   
+  };
+
+
+
     const navigate=useNavigate();
    
     const dispatch = useDispatch();
-  
+  console.log("helooooooooooooooooooooooooooooooooooooooooooooooos");
+ 
   const jwt = localStorage.getItem("jwt");
+  console.log(jwt);
   const {cart}=useSelector(store=>store);
   console.log("cart ",cart)
 
@@ -19,7 +48,58 @@ const Cart = () => {
   }, [jwt,cart.updateCartItems,cart.deleteCartItems]);
  
   
-  
+  if(jwt===null)
+    {
+      return( <div className="flex flex-col items-center justify-center min-h-screen">
+      <div className="text-xl font-bold mb-4">Cart Empty</div>
+      <img
+        
+        className="cursor-pointer mb-4"
+        style={{ height: '25vh', width: 'auto' }}
+        src={EmptyCart}
+        alt="Empty Cart"
+      />
+      <div className="flex space-x-4">
+        <button
+          
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+          onClick={()=>
+            {
+              setOpenLoginForm(prev=>!prev)
+            }
+          }
+
+          
+        >
+          Login
+        </button>
+        {openLoginForm && <LoginForm onClose={handleCloseLogin} />}
+       
+       
+        <button
+          
+          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700"
+          onClick={handleOpenAuth}
+        >
+          Signup
+        </button>
+        <AuthModal handleClose={handleCloseAuth} open = {openAuthModal}/>
+      </div>
+    </div>)
+    }
+    if(cart.cartItems.length===0)
+      {
+        return( <div className="flex flex-col items-center justify-center min-h-screen">
+        <div className="text-xl font-bold mb-4">Cart Empty</div>
+        <img
+         
+          style={{ height: '35vh', width: 'auto' }}
+          src={EmptyCart}
+          alt="Empty Cart"
+        />
+      </div>)
+      }
+   
   return (
     <div className="">
       {cart.cartItems.length>0 && <div className="lg:grid grid-cols-3 lg:px-16 relative">

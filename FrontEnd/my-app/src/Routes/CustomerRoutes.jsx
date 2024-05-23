@@ -16,6 +16,7 @@ import PrivacyPolicy from '../customer/pages/HomePage/PrivacyPolicy'
 import TearmsCondition from '../customer/pages/HomePage/TearmsCondition'
 import RateProduct from '../customer/components/ReviewProduct/RateProduct'
 import PaymentSuccess from '../customer/components/paymentSuccess/PaymentSuccess'
+import LoginForm from '../customer/Auth/LoginForm'
 const CustomerRoutes=()=>
 {
     const location = useLocation();
@@ -35,6 +36,7 @@ return (
 
 
         <Route path="/" element={<HomePage />}></Route>
+        <Route path="/login1" element={<LoginForm />}></Route>
         <Route path="/products/search" element={<SearchProduct/>}></Route>
         <Route path="/home" element={<HomePage />}></Route>
         <Route path="/about" element={<About />}></Route>
