@@ -32,7 +32,7 @@ const HomePage=()=>
             const stock=null; 
            const sort="price_low";
             
-            const pageNumber=0;
+            const pageNumber=1;
             const pageSize=11;
             const response1 = await axios.get(
               `${API_BASE_URL}/products?color=${colors}&size=${sizes}&minPrice=${minPrice}&maxPrice=${maxPrice}&minDiscount=${minDiscount}&category=${category1}&stock=${stock}&sort=${sort}&pageNumber=${pageNumber}&pageSize=${pageSize}`

@@ -25,7 +25,7 @@ const CustomerRoutes=()=>
     // Only show Navigation component when not on the NotFound page
     const showNavigation = location.pathname !== "*";
 return (
-    <div>
+    <div style={{background:"#F8F4EC"}}>
         <div>
 
         {showNavigation && <Navigation />}

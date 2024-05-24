@@ -48,9 +48,9 @@ const HomeSectionCarosel = ({sectionName,data}) => {
     console.log(items.length);
     return (
 
-        <div className=" border">
-            <h2 className='text-2xl font-extrabold text-gray-800 py-5'>{sectionName}</h2>
-            <div className="relative p-5 ">
+        <div className=" border" style={{ backgroundColor: "#323643" }}>
+            <h2 className='text-2xl font-extrabold text-white py-5'>{sectionName}</h2>
+            <div className="relative p-5 " >
                 <AliceCarousel
                
                     items={items}
