@@ -40,7 +40,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-
+import NoProduct from './NoProduct.png'
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -144,6 +144,8 @@ export default function Product() {
       setIsLoaderOpen(false);
     }
   }, [customersProduct.loading]);
+  const hasProducts = customersProduct?.products?.content?.length > 0;
+
 
   return (
     <div className="bg-white">
@@ -472,9 +474,19 @@ export default function Product() {
               {/* Product grid */}
               <div className="lg:col-span-4 w-full">
                 <div className="flex flex-wrap justify-center bg-white py-5">
-                  {customersProduct?.products?.content?.map((item) => (
-                    <ProductCard product={item} />
-                  ))}
+                {hasProducts ? (
+        customersProduct.products.content.map((item) => (
+          <ProductCard key={item.id} product={item} />
+        ))
+      ) : (
+        <div className="flex flex-col items-center justify-center flex-grow space-y-4">
+        <p>No products available.</p>
+        <img src={NoProduct} alt="No Products Available" className="max-w-full mx-auto" />
+      </div>
+
+        
+        
+      )}
                 </div>
               </div>
             </div>
