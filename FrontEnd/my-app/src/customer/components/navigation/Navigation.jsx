@@ -28,7 +28,7 @@ export default function Navigation() {
   const dispatch=useDispatch();
   const location=useLocation();
   
-  
+  const isHomePage = location.pathname === '/';
   const handleUserClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -242,12 +242,18 @@ export default function Navigation() {
               <div className="ml-4 flex lg:ml-0">
 
                 <span className="sr-only">Your Company</span>
-                <img  onClick={() => navigate(`/`)}
-                 className="h-8 w-auto cursor-pointer" 
-                  src={home}
-                  alt=""
-                  
-                />
+                {
+                  !isHomePage && (
+                    <img  onClick={() => navigate(`/`)}
+                    className="h-8 w-auto cursor-pointer" 
+                     src={home}
+                     alt=""
+                     
+                   />
+
+                  )
+                }
+               
 
               </div>
 
