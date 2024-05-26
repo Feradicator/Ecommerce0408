@@ -12,6 +12,7 @@
 	<groupId>BackendECommerce</groupId>
 	<artifactId>BackendECommerce</artifactId>
 	<version>0.0.1</version>
+	
 	<name>BackendECommerce</name>
 	<description>Template Project for Spring Boot based Backend, swagger,model mapper, JWT , security </description>
 	<properties>
