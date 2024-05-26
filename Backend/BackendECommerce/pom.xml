@@ -9,7 +9,7 @@
 		<version>2.7.18</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>BackendECommerce</groupId>
 	<artifactId>BackendECommerce</artifactId>
 	<version>0.0.1</version>
 	<name>BackendECommerce</name>
