@@ -228,7 +228,7 @@ export const mensShoesPage1=[
         "imageUrl": "https://rukminim1.flixcart.com/image/612/612/xif0q/shoe/s/9/k/-original-imagg6r6yveqfsw9.jpeg?q=70",
         "brand": "Asics",
         "title": "GEL-CONTEND 4B Running Shoes For Men",
-        "color": "",
+        "color": "Blue",
         "discountedPrice": 1693,
         "price": 3999,
         "discountPersent": 57,
