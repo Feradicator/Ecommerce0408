@@ -11,7 +11,7 @@ import LoginForm from '../../Auth/LoginForm';
 const Cart = () => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [openLoginForm,setOpenLoginForm]=useState(false);
-  const [check,setCheck]=useState(1);
+  const [check,setCheck]=useState(false);
   
   const handleOpenAuth = () => {
     setOpenAuthModal(true);
@@ -48,10 +48,10 @@ const Cart = () => {
    
     
   }, [jwt,cart.updateCartItems,cart.deleteCartItems]);
-  useEffect(() => {
-   
-    if (check<4) {
-     setCheck(prev=>prev+1);
+   useEffect(() => {
+    const hasReloaded = localStorage.getItem("hasReloaded");
+    if (!hasReloaded) {
+      localStorage.setItem("hasReloaded", "true");
       window.location.reload();
     }
   }, []);
