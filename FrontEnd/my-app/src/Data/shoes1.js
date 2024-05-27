@@ -3,7 +3,7 @@ export const mensShoesPage1 = [
         "imageUrl": "https://rukminim1.flixcart.com/image/612/612/l08gsy80/shoe/n/a/n/9-assg1015-9-abros-l-grey-maroon-original-imagc2m9zbzmtybx.jpeg?q=70",
         "brand": "Abros",
         "title": "ASSG1015N Running Shoes For Men",
-        "color": "",
+        "color": "White",
         "discountedPrice": 1455,
         "price": 1599,
         "discountPersent": 9,
@@ -31,7 +31,7 @@ export const mensShoesPage1 = [
         "imageUrl": "https://rukminim1.flixcart.com/image/612/612/xif0q/shoe/m/o/h/-original-imaggcawtbgvt7wy.jpeg?q=70",
         "brand": "asian",
         "title": "Oxygen-05 Running Shoes For Men",
-        "color": "",
+        "color": "White",
         "discountedPrice": 1117,
         "price": 1999,
         "discountPersent": 44,
@@ -59,7 +59,7 @@ export const mensShoesPage1 = [
         "imageUrl": "https://rukminim1.flixcart.com/image/612/612/kqidx8w0/shoe/i/4/n/6-brd-406-300-blue-6-birde-blue-original-imag4g8cmfkfzkjg.jpeg?q=70",
         "brand": "BIRDE",
         "title": "Combo Pack of 2 Sports Shoes Running Shoes For Men",
-        "color": "",
+        "color": "Blue",
         "discountedPrice": 499,
         "price": 998,
         "discountPersent": 50,
@@ -87,7 +87,7 @@ export const mensShoesPage1 = [
         "imageUrl": "https://rukminim1.flixcart.com/image/612/612/xif0q/shoe/g/i/g/10-rng-2021-blu-orng-44-bruton-blue-orange-original-imagdzcpzhscxwhg-bb.jpeg?q=70",
         "brand": "BRUTON",
         "title": "Trendy Sports Running Running Shoes For Men",
-        "color": "",
+        "color": "Blue",
         "discountedPrice": 299,
         "price": 1299,
         "discountPersent": 76,
@@ -115,7 +115,7 @@ export const mensShoesPage1 = [
         "imageUrl": "https://rukminim1.flixcart.com/image/612/612/l4rd0280/shoe/m/d/e/6-rk-494-grey-orange-40-bruton-grey-orange-original-imagfha9ssgydnef.jpeg?q=70",
         "brand": "BRUTON",
         "title": "Sports shoes for men | Latest Stylish Casual for men |r...",
-        "color": "",
+        "color": "White",
         "discountedPrice": 249,
         "price": 1299,
         "discountPersent": 80,
@@ -171,7 +171,7 @@ export const mensShoesPage1 = [
         "imageUrl": "https://rukminim1.flixcart.com/image/612/612/kuzuoi80/shoe/2/k/x/7-brd-574-brd-575-7-birde-multicolor-original-imag7zx8epryeskm.jpeg?q=70",
         "brand": "BIRDE",
         "title": "Trendy Sport Shoes For Men Pack Of 2 Running Shoes For ...",
-        "color": "",
+        "color": "Blue",
         "discountedPrice": 499,
         "price": 1498,
         "discountPersent": 66,
@@ -199,7 +199,7 @@ export const mensShoesPage1 = [
         "imageUrl": "https://rukminim1.flixcart.com/image/612/612/xif0q/shoe/1/8/p/-original-imaghvb7kkpy73vn.jpeg?q=70",
         "brand": "BRUTON",
         "title": "Trendy Sports Running Running Shoes For Men",
-        "color": "",
+        "color": "White",
         "discountedPrice": 249,
         "price": 1299,
         "discountPersent": 80,
@@ -227,7 +227,7 @@ export const mensShoesPage1 = [
         "imageUrl": "https://rukminim1.flixcart.com/image/612/612/xif0q/shoe/q/r/j/-original-imagzjg25cg9wsrj.jpeg?q=70",
         "brand": "CAMPUS",
         "title": "MIKE (N) Running Shoes For Men",
-        "color": "",
+        "color": "Blue",
         "discountedPrice": 949,
         "price": 1699,
         "discountPersent": 44,
@@ -283,7 +283,7 @@ export const mensShoesPage1 = [
         "imageUrl": "https://rukminim1.flixcart.com/image/612/612/xif0q/shoe/s/j/9/-original-imaghrfzmsz9e6kh.jpeg?q=70",
         "brand": "NIVIA",
         "title": "Super Court 2.0 Badminton Shoes For Men",
-        "color": "",
+        "color": "Yellow",
         "discountedPrice": 1047,
         "price": 1999,
         "discountPersent": 47,
@@ -367,7 +367,7 @@ export const mensShoesPage1 = [
         "imageUrl": "https://rukminim1.flixcart.com/image/612/612/xif0q/shoe/i/k/r/-original-imaghugwugwyczwc.jpeg?q=70",
         "brand": "asian",
         "title": "Future-01 running shoes For Men",
-        "color": "",
+        "color": "White",
         "discountedPrice": 514,
         "price": 999,
         "discountPersent": 48,
@@ -395,7 +395,7 @@ export const mensShoesPage1 = [
         "imageUrl": "https://rukminim1.flixcart.com/image/612/612/xif0q/shoe/r/j/c/-original-imaghvb8a8hjrfmr.jpeg?q=70",
         "brand": "CAMPUS",
         "title": "STREET-RUN Running Shoes For Men",
-        "color": "",
+        "color": "White",
         "discountedPrice": 1329,
         "price": 1799,
         "discountPersent": 26,
@@ -423,7 +423,7 @@ export const mensShoesPage1 = [
         "imageUrl": "https://rukminim1.flixcart.com/image/612/612/xif0q/shoe/9/h/e/10-bd-1191bl-10-nivia-blue-original-imagndzhu9sgpyzf.jpeg?q=70",
         "brand": "NIVIA",
         "title": "Badminton Shoes For Men",
-        "color": "",
+        "color": "Blue",
         "discountedPrice": 947,
         "price": 1799,
         "discountPersent": 47,
@@ -447,89 +447,6 @@ export const mensShoesPage1 = [
         "thirdLavelCategory": "mens_shoes",
         "description": "Stylish and trendy sports shoes for men by BRUTON."
     },
-    {
-        "imageUrl": "https://rukminim1.flixcart.com/image/612/612/ku1k4280/shoe/a/x/v/10-6043-43-kraasa-white-black-original-imag78cbht5zgyjz.jpeg?q=70",
-        "brand": "Kraasa",
-        "title": "Super Running Shoes For Men",
-        "color": "",
-        "discountedPrice": 499,
-        "price": 999,
-        "discountPersent": 50,
-        "size": [
-            {
-              "name": "S",
-              "quantity": 18
-            },
-            {
-              "name": "M",
-              "quantity": 22
-            },
-            {
-              "name": "L",
-              "quantity": 28
-            }
-        ],
-        "quantity": 68,
-        "topLavelCategory": "Men",
-        "secondLavelCategory": "Shoes",
-        "thirdLavelCategory": "mens_shoes",
-        "description": "Stylish and trendy sports shoes for men by BRUTON."
-    },
-    {
-        "imageUrl": "https://rukminim1.flixcart.com/image/612/612/knj7wcw0/shoe/k/x/y/6-brd-482-6-birde-black-original-imag27syjv9vyzef.jpeg?q=70",
-        "brand": "BIRDE",
-        "title": "BRD-482 Sports Shoes For Men",
-        "color": "",
-        "discountedPrice": 249,
-        "price": 998,
-        "discountPersent": 75,
-        "size": [
-            {
-              "name": "S",
-              "quantity": 10
-            },
-            {
-              "name": "M",
-              "quantity": 15
-            },
-            {
-              "name": "L",
-              "quantity": 25
-            }
-        ],
-        "quantity": 50,
-        "topLavelCategory": "Men",
-        "secondLavelCategory": "Shoes",
-        "thirdLavelCategory": "mens_shoes",
-        "description": "Stylish and trendy sports shoes for men by BRUTON."
-    },
-    {
-        "imageUrl": "https://rukminim1.flixcart.com/image/612/612/kzd147k0/shoe/8/8/k/10-oxgyen-06cgryasian-asian-grey-original-imagbeffxrdub6g8.jpeg?q=70",
-        "brand": "asian",
-        "title": "Oxgyen-06 Walking Shoes For Men",
-        "color": "",
-        "discountedPrice": 925,
-        "price": 1499,
-        "discountPersent": 38,
-        "size": [
-            {
-              "name": "S",
-              "quantity": 5
-            },
-            {
-              "name": "M",
-              "quantity": 10
-            },
-            {
-              "name": "L",
-              "quantity": 20
-            }
-        ],
-        "quantity": 35,
-        "topLavelCategory": "Men",
-        "secondLavelCategory": "Shoes",
-        "thirdLavelCategory": "mens_shoes",
-        "description": "Stylish and trendy sports shoes for men by BRUTON."
 
-    }
+   
 ];
