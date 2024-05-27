@@ -50,8 +50,8 @@ const Cart = () => {
   }, [jwt,cart.updateCartItems,cart.deleteCartItems]);
   useEffect(() => {
    
-    if (check!==1) {
-     setCheck(2);
+    if (check!==4) {
+     setCheck(prev=>prev+1);
       window.location.reload();
     }
   }, []);
