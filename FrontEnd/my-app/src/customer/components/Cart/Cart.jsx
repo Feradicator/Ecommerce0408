@@ -11,7 +11,7 @@ import LoginForm from '../../Auth/LoginForm';
 const Cart = () => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [openLoginForm,setOpenLoginForm]=useState(false);
-  
+  const [check,setCheck]=useState(false);
   
   const handleOpenAuth = () => {
     setOpenAuthModal(true);
@@ -45,9 +45,14 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(getCart(jwt));
+    
   }, [jwt,cart.updateCartItems,cart.deleteCartItems]);
  
-  
+  useEffect(()=>
+  {
+    setCheck(!check)
+
+  },[])
   if(jwt===null)
     {
       return( <div className="flex flex-col items-center justify-center min-h-screen">
@@ -109,6 +114,7 @@ const Cart = () => {
             <>
               <CartItem item={item} showButton={true}/>
             </>
+           
           ))}
         </div>
       </div>
