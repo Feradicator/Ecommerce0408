@@ -48,13 +48,7 @@ const Cart = () => {
    
     
   }, [jwt,cart.updateCartItems,cart.deleteCartItems]);
-   useEffect(() => {
-    const hasReloaded = localStorage.getItem("hasReloaded");
-    if (!hasReloaded) {
-      localStorage.setItem("hasReloaded", "true");
-      window.location.reload();
-    }
-  }, []);
+ 
  
   if(jwt===null)
     {
