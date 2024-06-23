@@ -61,13 +61,13 @@ const HomeSectionCarosel = ({sectionName,data}) => {
                     onSlideChanged={syncActiveIndex}
                     activeIndex={activeIndex}
                 />
-               {activeIndex!==items.length-5 && (<Button variant="contained"  className="z-50" onClick={slideNext} sx={{ position: 'absolute', top: "8rem", right: "0rem", transform: "translateX(50%) rotate(90deg)" ,bgcolor:'white'}} aria-label="next">
+               {/* {activeIndex!==items.length-5 && (<Button variant="contained"  className="z-50" onClick={slideNext} sx={{ position: 'absolute', top: "8rem", right: "0rem", transform: "translateX(50%) rotate(90deg)" ,bgcolor:'white'}} aria-label="next">
                     <KeyboardArrowLeftIcon sx={{ transform: "rotate(90deg)" ,color:'black'}} />
                 </Button>)}
                 {activeIndex!==0 &&(
                     <Button variant="contained" onClick={slidePrev} className="z-50" sx={{ position: 'absolute', top: "8rem", left: "0rem", transform: "translateX(-50%) rotate(90deg)" ,bgcolor:'white'}} aria-label="next">
                     <KeyboardArrowLeftIcon sx={{ transform: "rotate(-90deg)" ,color:'black'}} />
-                </Button>)}
+                </Button>)} */}
 
             </div>
         </div>
