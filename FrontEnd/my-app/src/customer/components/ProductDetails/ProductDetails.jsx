@@ -179,7 +179,7 @@ export default function ProductDetails() {
               />
             </div>
             <div className="flex flex-wrap space-x-5 justify-center">
-            {product.images.map((image) => (
+            {/* {product.images.map((image) => (
                 <div
                   onClick={() => handleSetActiveImage(image)}
                   className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg max-w-[5rem] max-h-[5rem] mt-4"
@@ -190,7 +190,7 @@ export default function ProductDetails() {
                     className="h-full w-full object-cover object-center"
                   />
                 </div>
-              ))}
+              ))} */}
             </div>
           </div>
           {/* Product info */}
