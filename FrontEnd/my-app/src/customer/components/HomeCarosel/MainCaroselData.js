@@ -1,10 +1,10 @@
 export const MainCaroselData=[
     
     {
-        image:"https://www.ethnicplus.in/media/mageplaza/bannerslider/banner/image/6/_/6_11.jpg"
+        image:"https://www.ethnicplus.in/cdn/shop/files/6.jpg?v=1755190444&width=1880"
     },
     {
-        image:"https://www.ethnicplus.in/media/mageplaza/bannerslider/banner/image/5/_/5_12.jpg"
+        image:"https://www.ethnicplus.in/cdn/shop/files/8.jpg?v=1755414645&width=1880"
     },
     {
         image:"https://www.ethnicplus.in/media/mageplaza/bannerslider/banner/image/7/_/7_10.jpg"
