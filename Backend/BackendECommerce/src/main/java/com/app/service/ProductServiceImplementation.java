@@ -142,12 +142,16 @@ public class ProductServiceImplementation implements ProductService {
 			products=products.stream().filter(p -> p.getQuantity()<1).collect(Collectors.toList());
 			}
 			}
-			int startIndex=(int)pageable.getOffset();
-			int endIndex=Math.min(startIndex + pageable.getPageSize(), products.size());
-			List<Product> pageContent=products.subList(startIndex, endIndex);
-			System.out.println(pageContent);
-			Page<Product> filteredProducts=new PageImpl<>(pageContent,pageable,products.size());
-			return filteredProducts;
+			int startIndex = (int) pageable.getOffset();
+if (startIndex >= products.size()) {
+    return new PageImpl<>(Collections.emptyList(), pageable, products.size());
+}
+
+int endIndex = Math.min(startIndex + pageable.getPageSize(), products.size());
+List<Product> pageContent = products.subList(startIndex, endIndex);
+
+return new PageImpl<>(pageContent, pageable, products.size());
+	
 
 			
 		
