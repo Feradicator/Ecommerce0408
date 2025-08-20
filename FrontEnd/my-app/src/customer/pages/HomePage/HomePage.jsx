@@ -16,7 +16,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const categories = ['mens_kurta', 'mens_shoes', 'dress', 'top', 'men_jeans'];
+        const categories = ['mens_kurta', 'Shoes', 'dress', 'top', 'men_jeans'];
         const colors = [];
         const sizes = [];
         const minPrice = 0;
