@@ -45,7 +45,7 @@ const HomePage = () => {
           console.log(`Request URL: ${API_BASE_URL}/products`);
           console.log(`Request Params:`, params);
 
-          return axios.get(`${API_BASE_URL}/products`, { params });
+          return axios.get(`${API_BASE_URL}/productsLimit`, { params });
         });
 
         // Wait for all the requests to complete
