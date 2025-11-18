@@ -39,7 +39,7 @@ public class ProductController {
         System.out.println("complete products");
         return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
 }
-    @GetMapping("/products")
+    @GetMapping("/productsLimit")
     public ResponseEntity<Page<Product>> findProductByCategoryHandlerLimit(@RequestParam String category, 
         @RequestParam List<String>color,@RequestParam List<String> size,@RequestParam Integer minPrice,
         @RequestParam Integer maxPrice, @RequestParam Integer minDiscount, @RequestParam String sort, 
