@@ -89,9 +89,9 @@ const HomePage = () => {
       <div className='space-y-10 py-20 flex flex-col justify-center px-5 lg:px-10'>
         <HomeSectionCarosel data={menKurta} sectionName={"Men's Kurta"} />
         <HomeSectionCarosel data={menShoes} sectionName={"Men's Shoes"} />
-        <HomeSectionCarosel data={top} sectionName={"Women Tops"} />
+        <HomeSectionCarosel data={top} sectionName={"Women Jeans"} />
         <HomeSectionCarosel data={dress} sectionName={"Women Dress"} />
-        <HomeSectionCarosel data={jeans} sectionName={"Jeans"} />
+        <HomeSectionCarosel data={jeans} sectionName={"Men Jeans"} />
       </div>
     </div>
   );
