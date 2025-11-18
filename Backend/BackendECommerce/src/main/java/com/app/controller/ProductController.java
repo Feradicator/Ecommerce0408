@@ -53,7 +53,7 @@ public class ProductController {
             System.out.println(sort);
             System.out.println(stock);
             System.out.println(pageNumber);
-        Page<Product> res= productService.getAllProduct(
+        Page<Product> res= productService.getAllProductLimit(
         category, color, size, minPrice, maxPrice, minDiscount, sort, stock,pageNumber,pageSize);
         
         System.out.println("complete products");
