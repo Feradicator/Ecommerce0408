@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import MainCarousel from '../../components/HomeCarosel/MainCarosel';
 import HomeSectionCarosel from '../../components/HomeSectionCarosel/HomeSectionCarosel';
 import { MainCaroselData } from '../../components/HomeCarosel/MainCaroselData';
-import axios from 'axios';
-import { API_BASE_URL } from '../../../config/apiConfig';
+import { api } from "../../../config/apiConfig";
+
 
 const HomePage = () => {
   const [menKurta, setMenKurta] = useState([]);
@@ -45,7 +45,8 @@ const HomePage = () => {
           console.log(`Request URL: ${API_BASE_URL}/products`);
           console.log(`Request Params:`, params);
 
-          return axios.get(`${API_BASE_URL}/products`, { params });
+          return api.get("/products", { params });
+
         });
 
         // Wait for all the requests to complete
