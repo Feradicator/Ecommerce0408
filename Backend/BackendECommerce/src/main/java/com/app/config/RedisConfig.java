@@ -1,5 +1,8 @@
 package com.app.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,14 +19,18 @@ public class RedisConfig {
     @Bean
     public RedisCacheConfiguration cacheConfiguration() {
 
+        // Custom ObjectMapper to support LocalDateTime
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());          // 👈 important
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        GenericJackson2JsonRedisSerializer serializer =
+                new GenericJackson2JsonRedisSerializer(mapper);
+
         return RedisCacheConfiguration.defaultCacheConfig()
-                // Store values in JSON, not Java serialization
                 .serializeValuesWith(
-                    RedisSerializationContext
-                        .SerializationPair
-                        .fromSerializer(new GenericJackson2JsonRedisSerializer())
+                        RedisSerializationContext.SerializationPair.fromSerializer(serializer)
                 )
-                // Set TTL
                 .entryTtl(Duration.ofMinutes(10))
                 .disableCachingNullValues();
     }
