@@ -22,6 +22,8 @@ import com.app.model.Product;
 import com.app.repository.CategoryRepository;
 import com.app.repository.ProductRepository;
 import com.app.request.CreateProductRequest;
+import org.springframework.cache.annotation.Cacheable;
+
 @Service
 @Transactional
 public class ProductServiceImplementation implements ProductService {
@@ -122,41 +124,53 @@ public class ProductServiceImplementation implements ProductService {
 	}
 
 	@Override
-	
-	public Page<Product> getAllProduct(String category, List<String> colors, List<String> sizes, Integer minPrice,
-			Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize) {
-		// TODO Auto-generated method stub
-		Pageable pageable=PageRequest.of(pageNumber, pageSize);
-		List<Product>products=productRepository.filterProducts(category, minPrice, maxPrice,minDiscount, sort);
-		
-		System.out.println(products);
-		if(!colors.isEmpty())
-		{
-			products=products.stream().filter(p->colors.stream().anyMatch(c->c.equalsIgnoreCase(p.getColor()))).collect(Collectors.toList());
-		}
-		if(stock!=null) {
-			if(stock.equals("in_stock")){
-			products=products.stream().filter(p -> p.getQuantity()>0).collect(Collectors.toList());
-			}
-			
-			else if (stock.equals("out_of_stock")) {
-			products=products.stream().filter(p -> p.getQuantity()<1).collect(Collectors.toList());
-			}
-			}
-			int startIndex = (int) pageable.getOffset();
-if (startIndex >= products.size()) {
-    return new PageImpl<>(Collections.emptyList(), pageable, products.size());
-}
+	@Cacheable(
+	    value = "products_cache",
+	    key = "T(String).format('%s-%s-%s-%s-%s-%s-%s-%s-%s-%s', " +
+	          "#category, #colors, #sizes, #minPrice, #maxPrice, #minDiscount, " +
+	          "#sort, #stock, #pageNumber, #pageSize)"
+	)
+	public Page<Product> getAllProduct(
+	        String category, List<String> colors, List<String> sizes, Integer minPrice,
+	        Integer maxPrice, Integer minDiscount, String sort, String stock,
+	        Integer pageNumber, Integer pageSize) {
 
-int endIndex = Math.min(startIndex + pageable.getPageSize(), products.size());
-List<Product> pageContent = products.subList(startIndex, endIndex);
+	    System.out.println("🔥 DB Call Happened (NORMAL / NO LIMIT)");
 
-return new PageImpl<>(pageContent, pageable, products.size());
-	
+	    Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-			
-		
+	    // Fetch base filtered products from DB
+	    List<Product> products = productRepository.filterProducts(
+	        category, minPrice, maxPrice, minDiscount, sort
+	    );
+
+	    // Apply color filter
+	    if (!colors.isEmpty()) {
+	        products = products.stream()
+	            .filter(p -> colors.stream().anyMatch(c -> c.equalsIgnoreCase(p.getColor())))
+	            .collect(Collectors.toList());
+	    }
+
+	    // Apply stock filter
+	    if (stock != null) {
+	        if (stock.equals("in_stock")) {
+	            products = products.stream().filter(p -> p.getQuantity() > 0).collect(Collectors.toList());
+	        } else if (stock.equals("out_of_stock")) {
+	            products = products.stream().filter(p -> p.getQuantity() < 1).collect(Collectors.toList());
+	        }
+	    }
+
+	    int startIndex = (int) pageable.getOffset();
+	    if (startIndex >= products.size()) {
+	        return new PageImpl<>(Collections.emptyList(), pageable, products.size());
+	    }
+
+	    int endIndex = Math.min(startIndex + pageable.getPageSize(), products.size());
+	    List<Product> pageContent = products.subList(startIndex, endIndex);
+
+	    return new PageImpl<>(pageContent, pageable, products.size());
 	}
+
 	@Override
 	
 	public Page<Product> getAllProductLimit(String category, List<String> colors, List<String> sizes, Integer minPrice,
