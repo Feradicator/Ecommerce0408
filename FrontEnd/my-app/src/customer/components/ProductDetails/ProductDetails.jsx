@@ -41,7 +41,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { findProductById } from "../../../State/Product/Action";
 import { addItemToCart } from "../../../State/Cart/Action";
 import { getAllReviews } from "../../../State/Review/Action";
-
+import { CircularProgress } from "@mui/material";
 
 
 const product = {
