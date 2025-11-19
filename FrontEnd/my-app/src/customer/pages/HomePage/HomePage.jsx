@@ -4,7 +4,7 @@ import HomeSectionCarosel from '../../components/HomeSectionCarosel/HomeSectionC
 import { MainCaroselData } from '../../components/HomeCarosel/MainCaroselData';
 
 import axios from 'axios';
-
+import { API_BASE_URL } from '../../../config/apiConfig';
 const HomePage = () => {
   const [menKurta, setMenKurta] = useState([]);
   const [menShoes, setMenShoes] = useState([]);
@@ -43,7 +43,7 @@ const HomePage = () => {
           };
 
       
-          
+
           return axios.get(`${API_BASE_URL}/products`, { params });
         });
 
