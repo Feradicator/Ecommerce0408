@@ -48,14 +48,7 @@ const HomePage = () => {
 
           return axios.get(`${API_BASE_URL}/products`, { params });
         });
-        useEffect(() => {
-  const timer = setTimeout(() => {
-    setShowServerMessage(true);
-  }, 10000);  // show message after 10 seconds
-
-  return () => clearTimeout(timer);
-}, []);
-
+        
 
         // Wait for all the requests to complete
         const responses = await Promise.all(requests);
@@ -83,6 +76,13 @@ const HomePage = () => {
 
     fetchData();
   }, []);
+  useEffect(() => {
+  const timer = setTimeout(() => {
+    setShowServerMessage(true);
+  }, 10000);  // show message after 10 seconds
+
+  return () => clearTimeout(timer);
+}, []);
 
 if (loading) {
   return (
