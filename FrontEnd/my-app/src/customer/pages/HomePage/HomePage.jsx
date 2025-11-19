@@ -42,8 +42,7 @@ const HomePage = () => {
             pageSize
           };
 
-          console.log(`Request URL: ${API_BASE_URL}/products`);
-          console.log(`Request Params:`, params);
+      
 
           return api.get("/products", { params });
 
