@@ -22,7 +22,9 @@ public class AppConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
 	{
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and
-		().authorizeHttpRequests(Authorize->Authorize.antMatchers("/api/**").authenticated().anyRequest().permitAll())
+		().authorizeHttpRequests(Authorize->Authorize.antMatchers("/api/**").authenticated().antMatchers("/products/**").permitAll()    // make products public
+            .antMatchers("/auth/**").permitAll()        // login/signup public
+            .anyRequest().permitAll())
 		.addFilterBefore(new JwtValidator(), BasicAuthenticationFilter.class).csrf().disable()
 		.cors().configurationSource(new CorsConfigurationSource() {
 			
