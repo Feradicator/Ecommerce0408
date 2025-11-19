@@ -27,39 +27,44 @@ public class AppConfig {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeHttpRequests(auth -> auth
-                .antMatchers("/auth/**").permitAll()       // login/signup public
-                .antMatchers("/products/**").permitAll()   // product listing public
-                .antMatchers("/api/**").authenticated()    // secured
+                .antMatchers("/auth/**").permitAll()      // signup/login public
+                .antMatchers("/products/**").permitAll()  // homepage public
+                .antMatchers("/api/**").authenticated()   // secure APIs
                 .anyRequest().permitAll()
             )
             .addFilterBefore(new JwtValidator(), BasicAuthenticationFilter.class)
-            .cors().configurationSource(new CorsConfigurationSource() {
-                @Override
-                public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-
-                    CorsConfiguration cfg = new CorsConfiguration();
-
-                    // Allowed React origins
-                    cfg.setAllowedOrigins(Arrays.asList(
-                        "http://localhost:3000",
-                        "https://yadavshivam-ecommerce0408.vercel.app",
-                        "https://ecommerce0408.vercel.app"
-                    ));
-
-                    cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    cfg.setAllowCredentials(true);
-                    cfg.setAllowedHeaders(Collections.singletonList("*"));
-                    cfg.setExposedHeaders(Arrays.asList("Authorization"));
-                    cfg.setMaxAge(3600L);
-
-                    return cfg;
-                }
-            })
+            .cors().configurationSource(corsConfigurationSource())
             .and()
-            .httpBasic().disable()     // ❌ Disable default Basic Auth popup
-            .formLogin().disable();    // ❌ Disable Spring login HTML page completely
+            .httpBasic().disable()
+            .formLogin().disable();
 
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        return new CorsConfigurationSource() {
+            @Override
+            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+
+                CorsConfiguration cfg = new CorsConfiguration();
+
+                // ❗ NO TRAILING SLASH HERE
+                cfg.setAllowedOrigins(Arrays.asList(
+                    "http://localhost:3000",
+                    "https://yadavshivam-ecommerce0408.vercel.app",
+                    "https://ecommerce0408.vercel.app"
+                ));
+
+                cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                cfg.setAllowCredentials(true);
+                cfg.setAllowedHeaders(Collections.singletonList("*"));
+                cfg.setExposedHeaders(Arrays.asList("Authorization"));
+                cfg.setMaxAge(3600L);
+
+                return cfg;
+            }
+        };
     }
 
     @Bean
