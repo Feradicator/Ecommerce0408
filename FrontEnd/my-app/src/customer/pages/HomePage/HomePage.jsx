@@ -12,6 +12,8 @@ const HomePage = () => {
   const [top, setTop] = useState([]);
   const [jeans, setJeans] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showServerMessage, setShowServerMessage] = useState(false);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,6 +48,14 @@ const HomePage = () => {
 
           return axios.get(`${API_BASE_URL}/products`, { params });
         });
+        useEffect(() => {
+  const timer = setTimeout(() => {
+    setShowServerMessage(true);
+  }, 10000);  // show message after 10 seconds
+
+  return () => clearTimeout(timer);
+}, []);
+
 
         // Wait for all the requests to complete
         const responses = await Promise.all(requests);
@@ -74,13 +84,22 @@ const HomePage = () => {
     fetchData();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-blue-500"></div>
-      </div>
-    );
-  }
+if (loading) {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen space-y-4 p-4">
+      <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-blue-500"></div>
+
+      {showServerMessage && (
+        <p className="text-center text-gray-600 text-sm max-w-md">
+          ⏳ The backend server is waking up…  
+          Since it's hosted on a free plan, it may take 1–2 minutes to start.  
+          Thank you for your patience!
+        </p>
+      )}
+    </div>
+  );
+}
+
 
   return (
     <div>
