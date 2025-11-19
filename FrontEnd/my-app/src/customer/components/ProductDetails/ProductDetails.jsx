@@ -42,7 +42,7 @@ import { findProductById } from "../../../State/Product/Action";
 import { addItemToCart } from "../../../State/Cart/Action";
 import { getAllReviews } from "../../../State/Review/Action";
 
-import { Skeleton } from "@mui/material";
+
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -128,10 +128,8 @@ export default function ProductDetails() {
  
 if (!customersProduct.product) {
   return (
-    <div className="p-10">
-      <Skeleton variant="rectangular" width={400} height={400} />
-      <Skeleton variant="text" width={300} height={40} />
-      <Skeleton variant="text" width={250} height={40} />
+    <div className="w-full h-screen flex justify-center items-center">
+      <CircularProgress />   {/* <-- MUI loader */}
     </div>
   );
 }
