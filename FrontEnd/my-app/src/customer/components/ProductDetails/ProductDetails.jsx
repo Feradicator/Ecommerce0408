@@ -126,13 +126,14 @@ export default function ProductDetails() {
     dispatch(getAllReviews(productId));
   }, [productId]);
  
-if (!customersProduct.product) {
+if (!customersProduct.product || Object.keys(customersProduct.product).length === 0) {
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <CircularProgress />   {/* <-- MUI loader */}
+      <CircularProgress />
     </div>
   );
 }
+
 
   return (
     <div className="bg-white lg:px-20">
