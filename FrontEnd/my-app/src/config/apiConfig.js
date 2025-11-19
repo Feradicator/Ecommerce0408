@@ -6,11 +6,11 @@ export const API_BASE_URL = "https://ecommerce0408.onrender.com";
 export const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    "Content-Type": "application/json"
-  }
+    "Content-Type": "application/json",
+  },
 });
 
-// Add interceptor to add token only when present
+// Add token ONLY when user is logged in
 api.interceptors.request.use((config) => {
   const jwt = localStorage.getItem("jwt");
 
@@ -18,5 +18,5 @@ api.interceptors.request.use((config) => {
     config.headers["Authorization"] = `Bearer ${jwt}`;
   }
 
-  return config;
+  return config;   // 👈 important!
 });
