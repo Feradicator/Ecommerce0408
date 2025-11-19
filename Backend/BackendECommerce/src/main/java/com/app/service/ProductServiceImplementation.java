@@ -124,12 +124,7 @@ public class ProductServiceImplementation implements ProductService {
 	}
 
 	@Override
-	@Cacheable(
-	    value = "products_cache",
-	    key = "T(String).format('%s-%s-%s-%s-%s-%s-%s-%s-%s-%s', " +
-	          "#category, #colors, #sizes, #minPrice, #maxPrice, #minDiscount, " +
-	          "#sort, #stock, #pageNumber, #pageSize)"
-	)
+	
 	public Page<Product> getAllProduct(
 	        String category, List<String> colors, List<String> sizes, Integer minPrice,
 	        Integer maxPrice, Integer minDiscount, String sort, String stock,
