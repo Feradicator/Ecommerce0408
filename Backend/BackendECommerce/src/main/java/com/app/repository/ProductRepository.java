@@ -22,10 +22,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 
 	
-@Cacheable(
-    value = "products_cache",
-    key = "{#category, #minPrice, #maxPrice, #minDiscount, #colors}"
-)
+
 
 
 	@Query("SELECT p FROM Product p " +
