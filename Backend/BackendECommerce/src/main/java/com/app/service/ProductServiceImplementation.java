@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.Collections;
+import java.util.Comparator;
 
 import javax.transaction.Transactional;
 
@@ -139,6 +140,14 @@ public class ProductServiceImplementation implements ProductService {
 	        category, minPrice, maxPrice, minDiscount, sort
 	    );
 
+	    // manual sorting
+	    if (sort.equals("price_low")) {
+	        products.sort(Comparator.comparing(Product::getDiscountedPrice));
+	    } else if (sort.equals("price_high")) {
+	        products.sort(Comparator.comparing(Product::getDiscountedPrice).reversed());
+	    } else {
+	        products.sort(Comparator.comparing(Product::getCreatedAt).reversed());
+	    }
 	    // Apply color filter
 	    if (!colors.isEmpty()) {
 	        products = products.stream()
