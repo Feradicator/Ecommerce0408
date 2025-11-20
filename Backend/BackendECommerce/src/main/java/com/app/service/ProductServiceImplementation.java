@@ -136,9 +136,14 @@ public class ProductServiceImplementation implements ProductService {
 	    Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
 	    // Fetch base filtered products from DB
+	   List<String> colorFilter = 
+	            (colors == null || colors.isEmpty()) ? null : colors;
+
+
+	    // Fetch base filtered products from DB
 	    List<Product> products = productRepository.filterProducts(
-	        category, minPrice, maxPrice, minDiscount,colors
-	    );
+	    	    category, minPrice, maxPrice, minDiscount, colorFilter
+	    	);
 
 	    // manual sorting
 	    if (sort.equals("price_low")) {
