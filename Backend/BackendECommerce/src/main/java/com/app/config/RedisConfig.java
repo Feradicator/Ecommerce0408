@@ -1,7 +1,9 @@
 package com.app.config;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -19,10 +21,16 @@ public class RedisConfig {
     @Bean
     public RedisCacheConfiguration cacheConfiguration() {
 
-        // Custom ObjectMapper to support LocalDateTime
         ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());          // 👈 important
+        mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        // 🔥 This part is required for Redis to deserialize into real objects
+        mapper.activateDefaultTyping(
+                LaissezFaireSubTypeValidator.instance,
+                ObjectMapper.DefaultTyping.NON_FINAL,
+                JsonTypeInfo.As.PROPERTY
+        );
 
         GenericJackson2JsonRedisSerializer serializer =
                 new GenericJackson2JsonRedisSerializer(mapper);
@@ -32,7 +40,6 @@ public class RedisConfig {
                         RedisSerializationContext.SerializationPair.fromSerializer(serializer)
                 )
                 .entryTtl(Duration.ofMinutes(2))
-
                 .disableCachingNullValues();
     }
 }
