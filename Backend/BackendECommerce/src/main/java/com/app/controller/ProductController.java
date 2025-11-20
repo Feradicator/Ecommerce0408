@@ -13,34 +13,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.app.model.Product;
 import com.app.service.ProductService;
+import com.app.dto.ProductDTO;
 import com.app.exception.ProductException;
 @RestController
 
 public class ProductController {
     @Autowired
     private ProductService productService;
-    @GetMapping("/products")
-    public ResponseEntity<Page<Product>> findProductByCategoryHandler(@RequestParam String category, 
-        @RequestParam List<String>color,@RequestParam List<String> size,@RequestParam Integer minPrice,
-        @RequestParam Integer maxPrice, @RequestParam Integer minDiscount, @RequestParam String sort, 
-        @RequestParam String stock, @RequestParam Integer pageNumber,@RequestParam Integer pageSize){
-            System.out.println("category"+category);
-            System.out.println(color);
-            System.out.println(size);
-            System.out.println(minPrice);
-            System.out.println(maxPrice);
-            System.out.println(minDiscount);
-            System.out.println(sort);
-            System.out.println(stock);
-            System.out.println(pageNumber);
-        Page<Product> res= productService.getAllProduct(
-        category, color, size, minPrice, maxPrice, minDiscount, sort, stock,pageNumber,pageSize);
-        
-        System.out.println("complete products");
-        return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
-}
-    @GetMapping("/productsLimit")
-    public ResponseEntity<Page<Product>> findProductByCategoryHandlerLimit(@RequestParam String category, 
+
+	@GetMapping("/products")
+	public ResponseEntity<Page<ProductDTO>> findProductByCategoryHandler(@RequestParam String category,
+			@RequestParam(required = false) List<String> color, @RequestParam(required = false) List<String> size,
+			@RequestParam(required = false) Integer minPrice, @RequestParam(required = false) Integer maxPrice,
+			@RequestParam(required = false) Integer minDiscount, @RequestParam(defaultValue = "recent") String sort,
+			@RequestParam(required = false) String stock, @RequestParam(defaultValue = "0") Integer pageNumber,
+			@RequestParam(defaultValue = "10") Integer pageSize) {
+		System.out.println("category = " + category);
+		System.out.println("colors = " + color);
+		System.out.println("size = " + size);
+		System.out.println("minPrice = " + minPrice);
+		System.out.println("maxPrice = " + maxPrice);
+		System.out.println("minDiscount = " + minDiscount);
+		System.out.println("sort = " + sort);
+		System.out.println("stock = " + stock);
+		System.out.println("pageNumber = " + pageNumber);
+		Page<ProductDTO> res = productService.getAllProduct(category, color, size, minPrice, maxPrice, minDiscount,
+				sort, stock, pageNumber, pageSize);
+		System.out.println("completed products");
+		return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
+	}
+
+    @GetMapping("/productsCache")
+    public ResponseEntity<Page<Product>> findProductByCategoryHandlerCache(@RequestParam String category, 
         @RequestParam List<String>color,@RequestParam List<String> size,@RequestParam Integer minPrice,
         @RequestParam Integer maxPrice, @RequestParam Integer minDiscount, @RequestParam String sort, 
         @RequestParam String stock, @RequestParam Integer pageNumber,@RequestParam Integer pageSize){
