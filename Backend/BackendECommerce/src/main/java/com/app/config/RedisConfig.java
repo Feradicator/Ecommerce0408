@@ -31,7 +31,8 @@ public class RedisConfig {
                 .serializeValuesWith(
                         RedisSerializationContext.SerializationPair.fromSerializer(serializer)
                 )
-                .entryTtl(Duration.ofDays(10))
+                .entryTtl(Duration.ofMinutes(2))
+
                 .disableCachingNullValues();
     }
 }
