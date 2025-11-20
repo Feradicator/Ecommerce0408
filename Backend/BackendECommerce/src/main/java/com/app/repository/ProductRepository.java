@@ -26,18 +26,17 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 		    value = "products_cache",
 		    key = "T(String).format('%s-%s-%s-%s', #category, #minPrice, #maxPrice, #minDiscount)"
 		)
-		@Query("SELECT p FROM Product p " +
-		        "WHERE (p.category.name = :category OR :category = '') " +
-		        "AND ((:minPrice IS NULL AND :maxPrice IS NULL) OR (p.discountedPrice BETWEEN :minPrice AND :maxPrice)) " +
-		        "AND (:minDiscount IS NULL OR p.discountPersent >= :minDiscount) " 
-		        )
+	@Query("SELECT p FROM Product p " +
+		       "WHERE (p.category.name = :category OR :category = '') " +
+		       "AND ((:minPrice IS NULL AND :maxPrice IS NULL) OR (p.discountedPrice BETWEEN :minPrice AND :maxPrice)) " +
+		       "AND (:minDiscount IS NULL OR p.discountPersent >= :minDiscount)")
 		List<Product> filterProducts(
 		        @Param("category") String category,
 		        @Param("minPrice") Integer minPrice,
 		        @Param("maxPrice") Integer maxPrice,
-		        @Param("minDiscount") Integer minDiscount,
-		        @Param("sort") String sort
+		        @Param("minDiscount") Integer minDiscount
 		);
+
 
 	
 	

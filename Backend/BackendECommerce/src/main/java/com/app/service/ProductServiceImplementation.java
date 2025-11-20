@@ -137,7 +137,7 @@ public class ProductServiceImplementation implements ProductService {
 
 	    // Fetch base filtered products from DB
 	    List<Product> products = productRepository.filterProducts(
-	        category, minPrice, maxPrice, minDiscount, sort
+	        category, minPrice, maxPrice, minDiscount
 	    );
 
 	    // manual sorting
