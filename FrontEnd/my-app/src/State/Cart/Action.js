@@ -76,31 +76,38 @@ export const addItemToCart = (reqData) => async (dispatch) => {
     }
   };
 
-  export const removeCartItem = (reqData) => async (dispatch) => {
-      try {
-        dispatch({ type: REMOVE_CART_ITEM_REQUEST });
-        const config = {
-          headers: {
-            Authorization: `Bearer ${reqData.jwt}`,
-            "Content-Type":"application/json"
-          },
-        };
-        await axios.delete(`${API_BASE_URL}/api/cart_items/${reqData.cartItemId}`,config);
-    
-        dispatch({
-          type: REMOVE_CART_ITEM_SUCCESS,
-          payload: reqData.cartItemId,
-        });
-      } catch (error) {
-        dispatch({
-          type: REMOVE_CART_ITEM_FAILURE,
-          payload:
-            error.response && error.response.data.message
-              ? error.response.data.message
-              : error.message,
-        });
-      }
+export const removeCartItem = (reqData) => async (dispatch) => {
+  try {
+    dispatch({ type: REMOVE_CART_ITEM_REQUEST });
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${reqData.jwt}`,
+        "Content-Type": "application/json",
+      },
     };
+
+    await axios.delete(
+      `${API_BASE_URL}/api/cart_items/${reqData.cartItemId}`,
+      config
+    );
+
+    dispatch({
+      type: REMOVE_CART_ITEM_SUCCESS,
+      payload: reqData.cartItemId,
+    });
+
+    // 🔥 Fetch latest cart data from backend
+    dispatch(getCart(reqData.jwt));
+
+  } catch (error) {
+    dispatch({
+      type: REMOVE_CART_ITEM_FAILURE,
+      payload: error.response?.data?.message ?? error.message,
+    });
+  }
+};
+
     
     export const updateCartItem = (reqData) => async (dispatch) => {
       try {
@@ -120,7 +127,7 @@ export const addItemToCart = (reqData) => async (dispatch) => {
           type: UPDATE_CART_ITEM_SUCCESS,
           payload: data,
         });
-                dispatch(getCart(reqData.jwt));
+        dispatch(getCart(reqData.jwt));
 
       } catch (error) {
         dispatch({
