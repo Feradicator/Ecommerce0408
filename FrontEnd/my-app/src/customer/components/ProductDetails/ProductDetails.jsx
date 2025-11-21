@@ -114,17 +114,19 @@ export default function ProductDetails() {
     setActiveImage(image);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const data = { productId, size: selectedSize.name };
     dispatch(addItemToCart({ data, jwt }));
     navigate("/cart");
   };
 
   useEffect(() => {
-    const data = { productId: Number(productId), jwt };
-    dispatch(findProductById(data));
-    dispatch(getAllReviews(productId));
-  }, [productId]);
+  const data = { productId: Number(productId), jwt };
+  dispatch(findProductById(data));
+  dispatch(getAllReviews(productId));
+}, [productId, jwt, dispatch]);
+
  
 if (!customersProduct.product || Object.keys(customersProduct.product).length === 0) {
   return (
@@ -371,9 +373,10 @@ if (!customersProduct.product || Object.keys(customersProduct.product).length ==
             <Grid container spacing={7}>
               <Grid item xs={7}>
                 <div className="space-y-5">
-                {customersProduct.product?.reviews.map((item, i) => (
-                    <ProductReviewCard item={item} />
-                  ))}
+                {customersProduct.product?.reviews?.map((item, i) => (
+  <ProductReviewCard key={i} item={item} />
+))}
+
                 </div>
               </Grid>
               <Grid item xs={5}>
@@ -416,7 +419,7 @@ if (!customersProduct.product || Object.keys(customersProduct.product).length ==
                     <Grid item xs={7}>
                       <LinearProgress
                         sx={{
-                          bgcolor: "#d0d0d0>",
+                          bgcolor: "#d0d0d0",
                           borderRadius: 4,
                           height: 7,
                           color: "yellow",
