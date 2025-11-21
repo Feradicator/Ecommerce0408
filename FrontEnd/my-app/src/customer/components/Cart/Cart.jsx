@@ -8,6 +8,8 @@ import { getCart } from '../../../State/Cart/Action';
 import EmptyCart from './EmptyCart.png'
 import AuthModal from '../../Auth/AuthModal';
 import LoginForm from '../../Auth/LoginForm';
+import { CircularProgress } from "@mui/material";
+
 const Cart = () => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [openLoginForm,setOpenLoginForm]=useState(false);
@@ -40,14 +42,30 @@ const Cart = () => {
  
   const jwt = localStorage.getItem("jwt");
   console.log(jwt);
-  const {cart}=useSelector(store=>store);
+const { cart, loading, cartItems } = useSelector(state => state.cart);
   console.log("cart ",cart)
 
-  useEffect(() => {
-    dispatch(getCart(jwt));
-   
-    
-  }, [jwt,cart.updateCartItems,cart.deleteCartItems]);
+useEffect(() => {
+  if (!jwt) return;
+  dispatch(getCart(jwt));
+}, [jwt]);
+
+
+if (loading) {
+  return (
+    <div 
+      style={{
+        height: "80vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <CircularProgress />
+    </div>
+  );
+}
+
  
  
   if(jwt===null)
@@ -89,7 +107,8 @@ const Cart = () => {
       </div>
     </div>)
     }
-    if(cart.cartItems.length===0)
+    if(!cart || cart?.cartItems?.length === 0)
+
       {
         return( <div className="flex flex-col items-center justify-center min-h-screen">
         <div className="text-xl font-bold mb-4">Cart Empty</div>
@@ -104,14 +123,12 @@ const Cart = () => {
    
   return (
     <div className="">
-      {cart.cartItems.length>0 && <div className="lg:grid grid-cols-3 lg:px-16 relative">
+      {cart?.cartItems?.length
+  >0 && <div className="lg:grid grid-cols-3 lg:px-16 relative">
         <div className="lg:col-span-2 lg:px-5 bg-white">
         <div className=" space-y-3">
-          {cart.cartItems.map((item) => (
-            <>
-              <CartItem item={item} showButton={true}/>
-            </>
-           
+          {cartItems?.map(item => (
+            <CartItem key={item.id} item={item} showButton={true} />
           ))}
         </div>
       </div>
@@ -122,12 +139,13 @@ const Cart = () => {
 
           <div className="space-y-3 font-semibold">
             <div className="flex justify-between pt-3 text-black ">
-              <span>Price ({cart.cart?.totalItem} item)</span>
-              <span>₹{cart.cart.totalPrice}</span>
+              <span>Price ({cart?.totalItem} item)</span>
+              <span>₹<span>{cart?.totalPrice}</span>
+</span>
             </div>
             <div className="flex justify-between">
               <span>Discount</span>
-              <span className="text-green-700">-₹{cart.cart?.discounte}</span>
+              <span className="text-green-700">-₹{cart?.discounte}</span>
             </div>
             <div className="flex justify-between">
               <span>Delivery Charges</span>
@@ -136,7 +154,7 @@ const Cart = () => {
             <hr />
             <div className="flex justify-between font-bold text-lg">
               <span>Total Amount</span>
-              <span className="text-green-700">₹{cart.cart?.totalDiscountedPrice}</span>
+              <span className="text-green-700">₹{cart?.totalDiscountedPrice}</span>
             </div>
           </div>
 
