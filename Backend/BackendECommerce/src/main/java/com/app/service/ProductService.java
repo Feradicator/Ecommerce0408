@@ -22,7 +22,7 @@ public interface ProductService {
     public List<Product>getAllProducts();
     public List<Product> recentlyAddedProduct();
     public List<Product> searchProduct(String query);
-    public List<Product> getFilteredProducts(
+    public List<ProductDTO> getFilteredProducts(
             String category, List<String> colors, List<String> sizes,
             Integer minPrice, Integer maxPrice, Integer minDiscount,
             String sort, String stock

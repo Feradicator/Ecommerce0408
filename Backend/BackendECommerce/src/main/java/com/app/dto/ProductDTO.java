@@ -16,7 +16,7 @@ private String brand;
 private String color;
 private String imageUrl;
 private int numRatings;
-private CategoryDTO category
-;private Set<String> sizes;
+private CategoryDTO category;
+private Set<SizeDTO> sizes;
 }
 

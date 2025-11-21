@@ -21,7 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	
 
 
-	
+
 	@Query("SELECT p FROM Product p " +
 		       "WHERE (p.category.name = :category OR :category = '') " +
 		       "AND ((:minPrice IS NULL AND :maxPrice IS NULL) OR (p.discountedPrice BETWEEN :minPrice AND :maxPrice)) " +
@@ -63,3 +63,4 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	public List<Product> findTop10ByOrderByCreatedAtDesc();
 
 }
+	

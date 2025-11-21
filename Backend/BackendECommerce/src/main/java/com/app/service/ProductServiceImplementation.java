@@ -26,10 +26,14 @@ import com.app.repository.CategoryRepository;
 import com.app.repository.ProductRepository;
 import com.app.request.CreateProductRequest;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationContext;
 
 @Service
 @Transactional
 public class ProductServiceImplementation implements ProductService {
+	@Autowired
+	private ApplicationContext applicationContext;
+
 	@Autowired
 	private ProductRepository productRepository;
 	@Autowired
@@ -136,7 +140,8 @@ public class ProductServiceImplementation implements ProductService {
 	    Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
 	    // FETCH FROM CACHE
-	    List<Product> products = getFilteredProducts(
+	    List<ProductDTO> products = applicationContext
+	    	    .getBean(ProductService.class).getFilteredProducts(
 	            category, colors, sizes,
 	            minPrice, maxPrice, minDiscount,
 	            sort, stock
@@ -144,12 +149,10 @@ public class ProductServiceImplementation implements ProductService {
 
 	    // ---- SORTING ----
 	    if ("price_low".equals(sort)) {
-	        products.sort(Comparator.comparing(Product::getDiscountedPrice));
+	        products.sort(Comparator.comparing(ProductDTO::getDiscountedPrice));
 	    } else if ("price_high".equals(sort)) {
-	        products.sort(Comparator.comparing(Product::getDiscountedPrice).reversed());
-	    } else {
-	        products.sort(Comparator.comparing(Product::getCreatedAt).reversed());
-	    }
+	        products.sort(Comparator.comparing(ProductDTO::getDiscountedPrice).reversed());
+	    } 
 
 	    // ---- STOCK FILTER ----
 	    if (stock != null) {
@@ -171,34 +174,34 @@ public class ProductServiceImplementation implements ProductService {
 	    }
 
 	    int endIndex = Math.min(startIndex + pageable.getPageSize(), products.size());
-	    List<Product> pageContent = products.subList(startIndex, endIndex);
+	    List<ProductDTO> pageContent = products.subList(startIndex, endIndex);
 
 	    // ---- ENTITY → DTO ----
-	    List<ProductDTO> dtoList = pageContent.stream()
-	            .map(ProductMapper::toDTO)
-	            .collect(Collectors.toList());
+	    return new PageImpl<>(pageContent, pageable, products.size());
 
-	    return new PageImpl<>(dtoList, pageable, products.size());
 	}
 	@Override
-	 @Cacheable(
-		        value = "products_cache",
-		        key = "{#category, #colors, #sizes, #minPrice, #maxPrice, #minDiscount, #sort, #stock}"
-		    )
-		    public List<Product> getFilteredProducts(
-		            String category, List<String> colors, List<String> sizes,
-		            Integer minPrice, Integer maxPrice, Integer minDiscount,
-		            String sort, String stock
-		    ) {
-		        System.out.println("🔥 DB Call Happened (CACHED LIST)");
+	@Cacheable(
+		    value = "products_cache",
+		    key = "{#category, #colors, #sizes, #minPrice, #maxPrice, #minDiscount, #sort, #stock}"
+		)
+		public List<ProductDTO> getFilteredProducts(
+		        String category, List<String> colors, List<String> sizes,
+		        Integer minPrice, Integer maxPrice, Integer minDiscount,
+		        String sort, String stock
+		) {
+		    System.out.println("🔥 DB Call Happened (CACHED LIST)");
 
-		        List<String> colorFilter =
-		                (colors == null || colors.isEmpty()) ? null : colors;
+		    List<Product> products = productRepository.filterProducts(
+		            category, minPrice, maxPrice, minDiscount,
+		            (colors == null || colors.isEmpty()) ? null : colors
+		    );
 
-		        return productRepository.filterProducts(
-		                category, minPrice, maxPrice, minDiscount, colorFilter
-		        );
-		    }
+		    return products.stream()
+		            .map(ProductMapper::toDTO)
+		            .collect(Collectors.toList());
+		}
+
 
 	@Override
 	
