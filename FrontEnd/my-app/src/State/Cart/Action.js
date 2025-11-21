@@ -120,6 +120,8 @@ export const addItemToCart = (reqData) => async (dispatch) => {
           type: UPDATE_CART_ITEM_SUCCESS,
           payload: data,
         });
+                dispatch(getCart(reqData.jwt));
+
       } catch (error) {
         dispatch({
           type: UPDATE_CART_ITEM_FAILURE,

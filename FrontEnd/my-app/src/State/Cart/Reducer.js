@@ -27,7 +27,7 @@ const cartReducer = (state = initialState, action) => {
     case ADD_ITEM_TO_CART_SUCCESS:
       return {
         ...state,
-cartItems: action.payload.cartItems,
+        cartItems: action.payload.cartItems,  // Assuming the backend returns updated cart items
         loading: false,
       };
     case ADD_ITEM_TO_CART_FAILURE:
@@ -36,12 +36,13 @@ cartItems: action.payload.cartItems,
       return {
         ...state,
         loading: true,
+        error: null,
       };
     case GET_CART_SUCCESS:
       return {
         ...state,
         cartItems: action.payload.cartItems,
-        cart:action.payload,
+        cart: action.payload,
         loading: false,
       };
     case GET_CART_FAILURE:
@@ -56,24 +57,21 @@ cartItems: action.payload.cartItems,
         ...state,
         loading: true,
       };
-  case REMOVE_CART_ITEM_SUCCESS:
-  return {
-    ...state,
-    cartItems: state.cartItems.filter(
-      (item) => item.id !== action.payload
-    ),
-    loading: false,
-  };
-
-case UPDATE_CART_ITEM_SUCCESS:
-  return {
-    ...state,
-    cartItems: state.cartItems.map((item) =>
-      item.id === action.payload.id ? action.payload : item
-    ),
-    loading: false,
-  };
-
+    case REMOVE_CART_ITEM_SUCCESS:
+      // Update the cartItems list based on the action payload (could be the full cart or just ID)
+      return {
+        ...state,
+        cartItems: action.payload.cartItems ? action.payload.cartItems : state.cartItems.filter(item => item.id !== action.payload), // If full cart is returned, update it; otherwise, remove the item by ID
+        loading: false,
+      };
+    case UPDATE_CART_ITEM_SUCCESS:
+      return {
+        ...state,
+        cartItems: state.cartItems.map((item) =>
+          item.id === action.payload.id ? action.payload : item
+        ),
+        loading: false,
+      };
     case REMOVE_CART_ITEM_FAILURE:
     case UPDATE_CART_ITEM_FAILURE:
       return {
