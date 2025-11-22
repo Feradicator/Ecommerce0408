@@ -61,12 +61,12 @@ export const findProducts = (reqData) => async (dispatch) => {
 
 export const findProductById = (reqData) => async (dispatch) => {
   try {
-    dispatch({ type: FIND_PRODUCT_BY_ID_REQUEST });
+    dispatch({ type: FIND_PRODUCT_BY_ID_REQUEST }); // Already correct
 
     const { data } = await axios.get(
-      `${API_BASE_URL}/products/id/${reqData.productId}`);
+      `${API_BASE_URL}/products/id/${reqData.productId}`
+    );
 
-    console.log("products by  id : ", data);
     dispatch({
       type: FIND_PRODUCT_BY_ID_SUCCESS,
       payload: data,
@@ -75,25 +75,21 @@ export const findProductById = (reqData) => async (dispatch) => {
     dispatch({
       type: FIND_PRODUCT_BY_ID_FAILURE,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+        error.response?.data?.message || error.message,
     });
   }
 };
+
 
 export const searchProduct = (keyword) => async (dispatch) => {
   try {
     dispatch({ type: SEARCH_PRODUCT_REQUEST });
 
     const { data } = await axios.get(
-      `${API_BASE_URL}/products/search`,{
-      params:{
-        q:keyword
-      }
-    });
+      `${API_BASE_URL}/products/search`,
+      { params: { q: keyword } }
+    );
 
-    console.log("products by  id : ", data);
     dispatch({
       type: SEARCH_PRODUCT_SUCCESS,
       payload: data,
@@ -102,12 +98,12 @@ export const searchProduct = (keyword) => async (dispatch) => {
     dispatch({
       type: SEARCH_PRODUCT_FAILURE,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+        error.response?.data?.message || error.message,
     });
   }
 };
+
+
 
 export const createProduct = (product) => async (dispatch) => {
   try {

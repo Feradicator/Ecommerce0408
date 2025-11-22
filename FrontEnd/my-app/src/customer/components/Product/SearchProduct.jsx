@@ -14,13 +14,14 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import Pagination from "@mui/material/Pagination";
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';  // Import Button
 
 import { filters, singleFilter, sortOptions } from "./FilterData";
 import ProductCard from "./ProductCard";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { searchProduct,findProducts } from "../../../State/Product/Action";
+import { searchProduct, findProducts } from "../../../State/Product/Action";
 import { Backdrop, CircularProgress } from "@mui/material";
 
 function classNames(...classes) {
@@ -32,17 +33,18 @@ export default function SearchProduct() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
-  const {keyword} = useParams();
+  const { keyword } = useParams();
   const { customersProduct } = useSelector((store) => store);
   const location = useLocation();
   const [isLoaderOpen, setIsLoaderOpen] = useState(false);
 
+  // New state for storing the search term
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Handle loader state
   const handleLoderClose = () => {
     setIsLoaderOpen(false);
   };
-
-  
-  // console.log("location - ", colorValue, sizeValue,price,disccount);
 
   const handleSortChange = (value) => {
     const searchParams = new URLSearchParams(location.search);
@@ -50,6 +52,7 @@ export default function SearchProduct() {
     const query = searchParams.toString();
     navigate({ search: `?${query}` });
   };
+
   const handlePaginationChange = (event, value) => {
     const searchParams = new URLSearchParams(location.search);
     searchParams.set("page", value);
@@ -57,13 +60,11 @@ export default function SearchProduct() {
     navigate({ search: `?${query}` });
   };
 
-  useEffect(() => {
-    // Assuming you want to search for products with the keyword
-    dispatch(findProducts({ keyword: keyword }));
-  }, [dispatch, keyword]);
-  
-
- 
+useEffect(() => {
+  if (keyword) {
+    dispatch(searchProduct(keyword));
+  }
+}, [keyword, dispatch]);
 
 
   useEffect(() => {
@@ -74,14 +75,15 @@ export default function SearchProduct() {
     }
   }, [customersProduct.loading]);
 
-  const handleSearch=(e)=>{
-    const keyword=e.target.value;
-    dispatch(searchProduct(keyword))
-
-  }
+  // Handle search when button is clicked
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      dispatch(searchProduct(searchTerm));
+    }
+  };
 
   return (
-    <div className="bg-white -z-20 ">
+    <div className="bg-white -z-20 min-h-screen ">
       <div>
         {/* Mobile filter dialog */}
         <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -134,7 +136,6 @@ export default function SearchProduct() {
                         as="div"
                         key={section.id}
                         className="border-t border-gray-200 px-4 py-6"
-                        // open={false}
                       >
                         {({ open }) => (
                           <>
@@ -172,12 +173,10 @@ export default function SearchProduct() {
                                       type="checkbox"
                                       defaultChecked={option.checked}
                                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                      
                                     />
                                     <label
                                       htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
                                       className="ml-3 min-w-0 flex-1 text-gray-500"
-                                      // onClick={()=>handleFilter(option.value,section.id)}
                                     >
                                       {option.label}
                                     </label>
@@ -201,7 +200,6 @@ export default function SearchProduct() {
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
               Search Product
             </h1>
-
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
@@ -247,22 +245,6 @@ export default function SearchProduct() {
                   </Menu.Items>
                 </Transition>
               </Menu>
-
-              <button
-                type="button"
-                className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
-              >
-                <span className="sr-only">View grid</span>
-                <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
-                onClick={() => setMobileFiltersOpen(true)}
-              >
-                <span className="sr-only">Filters</span>
-                <FunnelIcon className="h-5 w-5" aria-hidden="true" />
-              </button>
             </div>
           </div>
 
@@ -272,42 +254,55 @@ export default function SearchProduct() {
             </h2>
 
             <div>
-              
-              <div className=" gap-y-10 ">
-               
-
-                {/* Product grid */}
-                <div className=" w-full">
-                <TextField
+              <div className="gap-y-10">
+                {/* Search Input */}
+                <div className="w-full">
+                  <div className="flex items-center gap-4 mb-4">
+                    <TextField
                       id="outlined-basic"
-                      label="search product..."
+                      label="Search product..."
                       variant="outlined"
-                      onChange={handleSearch}
+                      value={searchTerm}  // Bind searchTerm to the input value
+                      onChange={(e) => setSearchTerm(e.target.value)}  // Update searchTerm on input change
                     />
-                  <div className="flex flex-wrap justify-center bg-white py-5 rounded-md ">
-                    {customersProduct?.searchProducts?.map((item) => (
-                      <ProductCard product={item} />
-                    ))}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleSearch}  // Trigger search on button click
+                    >
+                      Search
+                    </Button>
                   </div>
+
+                  {/* Loading Spinner or Loading Text */}
+                  {customersProduct.loading ? (
+                    <div className="flex justify-center items-center">
+                    </div>
+                  ) : (
+                    <div className="flex flex-wrap justify-center bg-white py-5 rounded-md ">
+                      {customersProduct?.searchProducts?.map((item) => (
+                        <ProductCard product={item} key={item.id} />
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </section>
         </main>
 
-        {/* pagination section */}
+        {/* Pagination Section */}
         <section className="w-full px-[3.6rem]">
           <div className="mx-auto px-4 py-5 flex justify-center shadow-lg border rounded-md">
             <Pagination
               count={customersProduct.products?.totalPages}
               color="primary"
-              className=""
               onChange={handlePaginationChange}
             />
           </div>
         </section>
 
-        {/* {backdrop} */}
+        {/* Backdrop */}
         <section>
           <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
